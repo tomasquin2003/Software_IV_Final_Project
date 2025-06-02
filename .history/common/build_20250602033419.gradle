@@ -1,0 +1,46 @@
+// common/build.gradle
+description = 'Módulo común con definiciones Slice de ZeroC Ice'
+
+// Directorio donde se generarán las clases Ice
+def generatedSourcesDir = file("${buildDir}/generated/sources/ice/java")
+
+// Tarea para generar código Java desde archivos Slice
+task generateIceClasses(type: Exec) {
+    description = 'Genera clases Java desde archivos Slice (.ice)'
+    group = 'build'
+    
+    def sliceDir = file('src/main/slice')
+    
+    doFirst {
+        generatedSourcesDir.mkdirs()
+        println "Generando clases Ice en: ${generatedSourcesDir.absolutePath}"
+        println "Archivos Slice encontrados: ${sliceDir.listFiles()?.findAll { it.name.endsWith('.ice') }}"
+    }
+      // Usar slice2java directamente con la configuración correcta para Ice 3.7
+    commandLine 'slice2java', '--compat', '--output-dir', generatedSourcesDir.absolutePath, 
+                'src/main/slice/Votacion.ice'
+    
+    inputs.dir(sliceDir)
+    outputs.dir(generatedSourcesDir)
+    
+    doLast {
+        println "Clases Ice generadas exitosamente en: ${generatedSourcesDir.absolutePath}"
+    }
+}
+
+// Configurar sourceSets para incluir el código generado
+sourceSets {
+    main {
+        java {
+            srcDirs += generatedSourcesDir
+        }
+    }
+}
+
+// Asegurar que las clases se generen antes de compilar
+compileJava.dependsOn generateIceClasses
+
+// Limpiar también los archivos generados
+clean {
+    delete generatedSourcesDir
+}

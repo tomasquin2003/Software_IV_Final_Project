@@ -1,0 +1,43 @@
+description = 'Servidor central para consolidación de votos'
+
+dependencies {
+    implementation project(':common')
+    implementation 'org.postgresql:postgresql:42.3.1'
+    
+    // Dependencias explícitas para Ice
+    implementation 'com.zeroc:ice:3.7.10'
+}
+
+apply plugin: 'application'
+
+application {
+    mainClassName = 'com.votacion.centro.CentroVotacion'
+}
+
+// Configuraciones adicionales de JVM para la aplicación
+run {
+    jvmArgs = ['-Xmx512m', '-Dfile.encoding=UTF-8']
+    systemProperty 'ice.config', "${projectDir}/src/main/resources/centro.properties"
+}
+
+// Tarea para verificar que las clases generadas están disponibles
+tasks.register('verifyGeneratedClasses') {
+    dependsOn ':common:generateIceClasses'
+    
+    doLast {
+        def commonProject = project(':common')
+        def generatedDir = file("${commonProject.buildDir}/generated/sources/ice/java")
+        println "Verificando directorio de clases generadas: ${generatedDir}"
+        println "¿Existe el directorio? ${generatedDir.exists()}"
+        if (generatedDir.exists()) {
+            def votacionSystemDir = new File(generatedDir, 'VotacionSystem')
+            if (votacionSystemDir.exists()) {
+                println "Archivos en VotacionSystem: ${votacionSystemDir.listFiles()?.size() ?: 0}"
+                println "GestorRecepcionVotosDisp.java existe: ${new File(votacionSystemDir, 'GestorRecepcionVotosDisp.java').exists()}"
+            }
+        }
+    }
+}
+
+// Ejecutar la verificación antes de compilar
+compileJava.dependsOn verifyGeneratedClasses

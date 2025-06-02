@@ -1,0 +1,26 @@
+// common/build.gradle
+// Tarea personalizada para compilar archivos Slice usando Gradle
+tasks.register('compileSlice', Exec) {
+    def sliceDir = file('src/main/slice')
+    def outputDir = file('src/generated/java')
+    
+    // Crear directorio de salida si no existe
+    doFirst {
+        outputDir.mkdirs()
+    }
+    
+    // Ejecutar nuestro script batch personalizado
+    commandLine 'cmd', '/c', "${rootProject.projectDir}/compile_slice.bat"
+}
+
+// Añadir el directorio generado como fuente de Java
+sourceSets {
+    main {
+        java {
+            srcDirs += 'src/generated/java'
+        }
+    }
+}
+
+// Configurar las dependencias de tareas
+compileJava.dependsOn compileSlice
