@@ -2,10 +2,10 @@
 
 ## 📋 Descripción del Proyecto
 
-##Presentado por los estudiantes
-#Juan Camilo Amorocho Murillo 
-#Juan Esteban Ruiz Ome
-#Tomas Quintero Gomez
+## Presentado por los estudiantes
+# Juan Camilo Amorocho Murillo 
+# Juan Esteban Ruiz Ome
+# Tomas Quintero Gomez
 
 Este proyecto implementa un sistema de votación electrónica distribuido que utiliza middleware ICE (Internet Communications Engine) para garantizar la transmisión segura y confiable de votos desde estaciones de votación remotas hacia un centro de consolidación central. El sistema está diseñado siguiendo patrones de arquitectura empresarial y principios de mensajería confiable (Reliable Messaging).
 
