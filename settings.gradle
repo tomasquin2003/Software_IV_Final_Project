@@ -1,7 +1,0 @@
-
-rootProject.name = 'Sistema_Votacion'
-
-// Incluir los módulos del proyecto
-include 'estacionVotacion'
-include 'centroVotacion' 
-include 'common'
