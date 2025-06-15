@@ -78,9 +78,7 @@ public class EstacionVotacionApp {
             String monitorServantName = props.getProperty("EstacionVotacion.SistemaMonitorizacionServant", "SistemaMonitorizacion");
             String verificadorServantName = props.getProperty("EstacionVotacion.VerificadorAsignacionServant", "VerificadorAsignacion");
             String almacenamientoServantName = props.getProperty("EstacionVotacion.AlmacenamientoTransitorioServant", "AlmacenamientoTransitorio");
-            String gestorEnvioServantName = props.getProperty("EstacionVotacion.GestorEnvioVotosServant", "GestorEnvioVotos");
-            
-            // Rutas de archivos de datos
+            String gestorEnvioServantName = props.getProperty("EstacionVotacion.GestorEnvioVotosServant", "GestorEnvioVotos");            // Rutas de archivos de datos
             String cedulasFile = props.getProperty("EstacionVotacion.CedulasAutorizadasFile", "src/main/resources/data/CedulasAutorizadas.csv");
             String votosTransitoriosFile = props.getProperty("EstacionVotacion.VotosTransitoriosFile", "data/estacion/VotosTransitorios.csv");
             String candidatosFile = props.getProperty("CentroVotacion.CandidatosFile", "src/main/resources/data/Candidatos.csv");
@@ -101,18 +99,15 @@ public class EstacionVotacionApp {
             SistemaMonitorizacion monitorServant = new SistemaMonitorizacionImpl(verificadorPrx);
             Identity monitorId = new Identity(monitorServantName, "");
             adapter.add(monitorServant, monitorId);
-            SistemaMonitorizacionPrx monitorPrx = SistemaMonitorizacionPrx.uncheckedCast(adapter.createProxy(monitorId));
-            
-            // Crear instancia de ControllerEstacion y agregarla al adaptador
-            ControllerEstacion controllerServant = new ControllerEstacionImpl(monitorPrx);
+            SistemaMonitorizacionPrx monitorPrx = SistemaMonitorizacionPrx.uncheckedCast(adapter.createProxy(monitorId));            // Crear instancia de ControllerEstacion y agregarla al adaptador
+            ControllerEstacion controllerServant = new ControllerEstacionImpl(monitorPrx, votosTransitoriosFile);
             Identity controllerId = new Identity(controllerServantName, "");
             adapter.add(controllerServant, controllerId);
             ControllerEstacionPrx controllerPrx = ControllerEstacionPrx.uncheckedCast(adapter.createProxy(controllerId));
-            
-            // Crear instancia de AlmacenamientoTransitorio y agregarla al adaptador
-            AlmacenamientoTransitorio almacenamientoServant = new AlmacenamientoTransitorioImpl(votosTransitoriosFile, estacionId);
+              // Crear instancia de AlmacenamientoTransitorio y agregarla al adaptador
+            AlmacenamientoTransitorioImpl almacenamientoServant = new AlmacenamientoTransitorioImpl(votosTransitoriosFile, estacionId);
             Identity almacenamientoId = new Identity(almacenamientoServantName, "");
-            adapter.add(almacenamientoServant, almacenamientoId);
+            adapter.add((AlmacenamientoTransitorio) almacenamientoServant, almacenamientoId);
             AlmacenamientoTransitorioPrx almacenamientoPrx = AlmacenamientoTransitorioPrx.uncheckedCast(adapter.createProxy(almacenamientoId));
             
             // Obtener proxy para el Centro de Votación
@@ -122,9 +117,10 @@ public class EstacionVotacionApp {
             if (centroVotacionPrx == null) {
                 throw new RuntimeException("Proxy inválido para el Centro de Votación");
             }
-              // Crear instancia de GestorEnvioVotos y agregarla al adaptador
+            
+            // Crear instancia de GestorEnvioVotos y agregarla al adaptador
             GestorEnvioVotosImpl gestorEnvioServant = new GestorEnvioVotosImpl(
-                    almacenamientoPrx, centroVotacionPrx, estacionId, adapter);
+                    almacenamientoPrx, almacenamientoServant, centroVotacionPrx, estacionId, adapter);
             Identity gestorEnvioId = new Identity(gestorEnvioServantName, "");
             adapter.add((GestorEnvioVotosCallback) gestorEnvioServant, gestorEnvioId);
             

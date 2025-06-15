@@ -25,9 +25,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
     private static final Logger logger = LoggerFactory.getLogger(GestorEnvioVotosImpl.class);
-    
-    // Proxy para acceder al servicio de almacenamiento transitorio
+      // Proxy para acceder al servicio de almacenamiento transitorio
     private final AlmacenamientoTransitorioPrx almacenamientoTransitorio;
+    
+    // Implementación directa para acceder a métodos extendidos
+    private final com.registraduria.votacion.estacion.persistencia.AlmacenamientoTransitorioImpl almacenamientoImpl;
       // Proxy para acceder al servicio de recepción de votos en el Centro
     private final GestorRecepcionVotosPrx gestorRecepcionVotos;
     
@@ -47,17 +49,20 @@ public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
      * Constructor que inicializa el gestor con las dependencias necesarias.
      * 
      * @param almacenamientoTransitorio Proxy para el servicio de almacenamiento transitorio
+     * @param almacenamientoImpl Implementación directa del almacenamiento transitorio
      * @param gestorRecepcionVotos Proxy para el servicio de recepción de votos
      * @param estacionId ID de la estación de votación
      * @param adapter Adaptador Ice para crear proxies
      */
     public GestorEnvioVotosImpl(
             AlmacenamientoTransitorioPrx almacenamientoTransitorio,
+            com.registraduria.votacion.estacion.persistencia.AlmacenamientoTransitorioImpl almacenamientoImpl,
             GestorRecepcionVotosPrx gestorRecepcionVotos,
             String estacionId,
             com.zeroc.Ice.ObjectAdapter adapter) {
         
         this.almacenamientoTransitorio = almacenamientoTransitorio;
+        this.almacenamientoImpl = almacenamientoImpl;
         this.gestorRecepcionVotos = gestorRecepcionVotos;
         this.estacionId = estacionId;
         this.adapter = adapter;
@@ -83,23 +88,25 @@ public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
                 INTERVALO_VERIFICACION_PENDIENTES);
     }
     
-    
-    /**
+      /**
      * Método para que el votante emita su voto.
      * 
      * @param candidatoId ID del candidato elegido
+     * @param cedulaVotante Cédula del votante que emite el voto
      * @return ID único asignado al voto
      * @throws Exception si hay un error en el proceso
      */
-    public String enviarVoto(String candidatoId) throws Exception {
+    public String enviarVoto(String candidatoId, String cedulaVotante) throws Exception {
         // Generar ID único para el voto
         String votoId = UUID.randomUUID().toString();
         
-        logger.info("Procesando nuevo voto. ID: {}, Candidato: {}", votoId, candidatoId);
-        
-        try {
-            // Almacenar el voto como pendiente
-            almacenamientoTransitorio.almacenarVotoTransitorio(votoId, candidatoId, EstadoVoto.PENDIENTE);
+        logger.info("Procesando nuevo voto. ID: {}, Candidato: {}, Cédula: {}", votoId, candidatoId, cedulaVotante);        try {
+            // CORRECCIÓN: Usar la implementación directa para almacenar con cédula
+            almacenamientoImpl.almacenarVotoTransitorio(votoId, candidatoId, cedulaVotante, EstadoVoto.PENDIENTE, null);
+            
+            // Registrar la relación votoId -> cédula en el contexto
+            com.registraduria.votacion.estacion.util.EstacionContext.getInstance()
+                .registrarVotoCedula(votoId, cedulaVotante);
             
             // Crear objeto Voto
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -117,21 +124,40 @@ public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
     }
     
     /**
+     * Método legacy para mantener compatibilidad con código existente.
+     * 
+     * @param candidatoId ID del candidato elegido
+     * @return ID único asignado al voto
+     * @throws Exception si hay un error en el proceso
+     */    public String enviarVoto(String candidatoId) throws Exception {
+        return enviarVoto(candidatoId, "DESCONOCIDA");
+    }
+      /**
      * Envía un voto al Centro de Votación.
      * 
      * @param voto Objeto Voto a enviar
      */
     private void enviarVotoAlCentro(Voto voto) {
-        logger.info("Enviando voto al Centro. ID: {}", voto.votoId);        try {
+        logger.info("Enviando voto al Centro. ID: {}", voto.votoId);
+        
+        try {
+            // Obtener la cédula del contexto
+            String cedulaVotante = com.registraduria.votacion.estacion.util.EstacionContext.getInstance()
+                .obtenerCedulaPorVotoId(voto.votoId);
+            
             // Usar el proxy del callback que ya está registrado en el adaptador
             // El ID debe coincidir con el usado en EstacionVotacionApp
             com.zeroc.Ice.Identity callbackId = new com.zeroc.Ice.Identity("GestorEnvioVotos", "");
             Votacion.GestorEnvioVotosCallbackPrx callbackPrx = 
                 Votacion.GestorEnvioVotosCallbackPrx.uncheckedCast(adapter.createProxy(callbackId));
             
-            // Enviar el voto al Centro usando el proxy del callback
-            gestorRecepcionVotos.recibirVoto(voto, callbackPrx); 
-            logger.info("Voto enviado al Centro exitosamente. ID: {}", voto.votoId);
+            // Crear contexto con metadatos para enviar la cédula
+            java.util.Map<String, String> ctx = new java.util.HashMap<>();
+            ctx.put("cedulaVotante", cedulaVotante);
+            
+            // Enviar el voto al Centro usando el proxy del callback con contexto
+            gestorRecepcionVotos.recibirVoto(voto, callbackPrx, ctx); 
+            logger.info("Voto enviado al Centro exitosamente. ID: {}, Cédula: {}", voto.votoId, cedulaVotante);
         } catch (VotoDuplicadoException e) {
             // Si el voto ya fue procesado, marcarlo como confirmado
             logger.warn("Voto duplicado detectado: {}", e.mensaje);
@@ -209,5 +235,30 @@ public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
         } catch (Exception e) {
             logger.error("Error al procesar confirmación de voto", e);
         }
+    }
+    
+    // Mapa temporal para relacionar votoId con cédula del votante
+    private final java.util.concurrent.ConcurrentHashMap<String, String> votoIdToCedula = new java.util.concurrent.ConcurrentHashMap<>();
+    
+    /**
+     * Registra la relación entre un votoId y la cédula del votante.
+     * Esto permite que el almacenamiento local pueda acceder a la cédula.
+     * 
+     * @param votoId ID del voto
+     * @param cedula Cédula del votante
+     */
+    public void registrarVotoCedula(String votoId, String cedula) {
+        votoIdToCedula.put(votoId, cedula);
+        logger.debug("Registrada relación votoId {} -> cédula {}", votoId, cedula);
+    }
+    
+    /**
+     * Obtiene la cédula asociada a un votoId.
+     * 
+     * @param votoId ID del voto
+     * @return Cédula del votante o "DESCONOCIDA" si no se encuentra
+     */
+    public String obtenerCedulaPorVotoId(String votoId) {
+        return votoIdToCedula.getOrDefault(votoId, "DESCONOCIDA");
     }
 }

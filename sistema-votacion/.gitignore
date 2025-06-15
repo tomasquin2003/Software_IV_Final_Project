@@ -1,0 +1,221 @@
+# =============================================================================
+# GITIGNORE PARA SISTEMA DE VOTACIÓN ELECTORAL
+# Proyecto Final - Ingeniería de Software IV
+# =============================================================================
+
+# ===== ARCHIVOS COMPILADOS JAVA =====
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+target/
+out/
+
+# ===== GRADLE =====
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== ARCHIVOS DE DATOS SENSIBLES =====
+# Archivos CSV con votos reales (mantener solo archivos de ejemplo)
+data/centro/VotosRecibidos.csv
+data/estacion/VotosTransitorios.csv
+data/centro/CedulasVotadas.csv
+data/estacion/CedulasVotadas.csv
+
+# Respaldos de archivos de datos
+*.csv.backup
+*.csv.bak
+*.csv.old
+
+# ===== LOGS DEL SISTEMA =====
+logs/
+*.log
+*.log.*
+logback.xml.backup
+
+# ===== IDEs =====
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+.metadata
+bin/
+tmp/
+*.tmp
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# ===== SISTEMA OPERATIVO =====
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===== ARCHIVOS TEMPORALES =====
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*~
+
+# ===== CONFIGURACIONES LOCALES =====
+# Configuraciones específicas del entorno local
+config/local.properties
+config/*.local
+*.local.config
+application-local.properties
+
+# ===== ARCHIVOS DE SEGURIDAD =====
+# Claves, certificados y tokens
+*.key
+*.pem
+*.p12
+*.keystore
+*.jks
+secrets/
+.env
+.env.local
+.env.*.local
+
+# ===== DOCUMENTACIÓN GENERADA =====
+# JavaDoc generado
+javadoc/
+doc/api/
+
+# ===== ARCHIVOS DE PRUEBA =====
+# Datos de prueba que no deben ser versionados
+test-data/
+*.test
+coverage/
+test-results/
+
+# ===== ICE (ZeroC Ice) =====
+# Archivos generados por Ice
+*Ice.java
+*PrxHelper.java
+*Operations.java
+*OperationsNC.java
+*Holder.java
+*Helper.java
+*Package.java
+# Mantener solo los .ice originales
+!*.ice
+
+# ===== HERRAMIENTAS DE BUILD =====
+# Maven (por si se usa en el futuro)
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===== ARCHIVOS DE CONFIGURACIÓN DEL PROYECTO =====
+# Mantener archivos de configuración ejemplo pero no los específicos
+# Descomenta si tienes configuraciones específicas que no quieres versionar
+# config/centro.config
+# config/estacion.config
+
+# ===== OTROS =====
+# Archivos de lock
+*.lock
+.lock-wscript
+
+# Archivos de caché
+.cache/
+*.cache
+
+# Archivos de índice
+.index/
+
+# =============================================================================
+# MANTENER ARCHIVOS IMPORTANTES
+# =============================================================================
+# Forzar inclusión de archivos importantes (usa ! para negar el ignore)
+!src/
+!*.md
+!*.gradle
+!gradlew
+!gradlew.bat
+!gradle/wrapper/
+!docs/
+!config/*.example
+!config/*.template
+!data/**/.gitkeep
+
+# =============================================================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO ELECTORAL
+# =============================================================================
+# Reportes de resultados electorales sensibles
+resultados-*.csv
+reporte-*.pdf
+auditoria-*.log
+
+# Archivos de configuración de producción
+prod.properties
+production.config
+*.prod.config

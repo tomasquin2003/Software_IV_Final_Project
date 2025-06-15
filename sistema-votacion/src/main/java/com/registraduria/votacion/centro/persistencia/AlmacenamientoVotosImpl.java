@@ -40,9 +40,8 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
     
     // Lock para gestionar acceso concurrente al archivo
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    
-    // Nombres de las columnas en el archivo CSV
-    private static final String[] HEADERS = {"votoId", "candidatoId", "estacionOrigen", "timestamp", "estado"};
+      // Nombres de las columnas en el archivo CSV
+    private static final String[] HEADERS = {"votoId", "candidatoId", "cedulaVotante", "estacionOrigen", "timestamp", "estado"};
     
     /**
      * Constructor que inicializa el componente con la ruta del archivo.
@@ -82,30 +81,27 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
             logger.error("Error al inicializar el archivo de votos recibidos", e);
             throw new RuntimeException("Error al inicializar el almacenamiento de votos", e);
         }
-    }
-
-    /**
+    }    /**
      * Registra un voto recibido en el almacenamiento.
      * 
      * @param votoId ID único del voto
      * @param candidatoId ID del candidato votado
+     * @param cedulaVotante Cédula del votante
      * @param estacionOrigen Estación de origen del voto
      * @param estado Estado del voto (normalmente RECIBIDO)
      * @param current Contexto de la llamada Ice
      * @throws ErrorPersistenciaException si hay un error al almacenar el voto
      */
-    @Override
-    public void registrarVotoRecibido(String votoId, String candidatoId, String estacionOrigen, EstadoVoto estado, Current current) 
+    public void registrarVotoRecibido(String votoId, String candidatoId, String cedulaVotante, String estacionOrigen, EstadoVoto estado, Current current) 
             throws ErrorPersistenciaException {
-        logger.info("Registrando voto recibido. ID: {}, Candidato: {}, Estación: {}, Estado: {}", 
-                votoId, candidatoId, estacionOrigen, estado);
+        logger.info("Registrando voto recibido. ID: {}, Candidato: {}, Cédula: {}, Estación: {}, Estado: {}", 
+                votoId, candidatoId, cedulaVotante, estacionOrigen, estado);
         
         lock.writeLock().lock();
         try {
             List<String[]> registros = new ArrayList<>();
             boolean votoExistente = false;
-            
-            // Leer registros existentes
+              // Leer registros existentes
             if (Files.exists(Paths.get(rutaArchivoVotos)) && Files.size(Paths.get(rutaArchivoVotos)) > 0) {
                 try (CSVParser parser = new CSVParser(
                         new FileReader(rutaArchivoVotos, StandardCharsets.UTF_8),
@@ -115,29 +111,30 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
                         String id = record.get("votoId");
                         
                         if (id.equals(votoId)) {
-                            // El voto ya existe, actualizamos su estado y potencialmente su estación de origen si antes era desconocida
+                            // El voto ya existe, actualizamos su estado
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
-                                estacionOrigen, // Usar el nuevo valor de estacionOrigen
+                                record.get("cedulaVotante"),
+                                record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 estado.toString()
                             });
                             votoExistente = true;
-                            logger.debug("Voto existente actualizado: {}. Estación: {}", votoId, estacionOrigen);
+                            logger.debug("Voto existente actualizado: {}. Cédula: {}, Estación: {}", votoId, cedulaVotante, estacionOrigen);
                         } else {
                             // Mantener registro sin cambios
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
+                                record.get("cedulaVotante"),
                                 record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 record.get("estado")
                             });
                         }
                     }
-                }
-            }
+                }            }
             
             // Si el voto no existe, agregar nuevo registro
             if (!votoExistente) {
@@ -147,12 +144,13 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
                 registros.add(new String[] {
                     votoId,
                     candidatoId,
-                    estacionOrigen, // Usar el parámetro estacionOrigen
+                    cedulaVotante,
+                    estacionOrigen,
                     timestamp,
                     estado.toString()
                 });
                 
-                logger.debug("Nuevo voto registrado: {}. Estación: {}", votoId, estacionOrigen);
+                logger.debug("Nuevo voto registrado: {}. Cédula: {}, Estación: {}", votoId, cedulaVotante, estacionOrigen);
             }
             
             // Escribir todos los registros
@@ -173,6 +171,16 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    /**
+     * Método original para mantener compatibilidad con la interfaz Ice.
+     */
+    @Override
+    public void registrarVotoRecibido(String votoId, String candidatoId, String estacionOrigen, EstadoVoto estado, Current current) 
+            throws ErrorPersistenciaException {
+        // Llamar al método extendido con cedulaVotante como "DESCONOCIDA" para votos legacy
+        registrarVotoRecibido(votoId, candidatoId, "DESCONOCIDA", estacionOrigen, estado, current);
     }
 
     /**
@@ -198,23 +206,23 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
                     
                     for (CSVRecord record : parser) {
                         String id = record.get("votoId");
-                        
-                        if (id.equals(votoId)) {
+                          if (id.equals(votoId)) {
                             // Actualizar estado a PROCESADO
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
+                                record.get("cedulaVotante"),
                                 record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 EstadoVoto.PROCESADO.toString()
                             });
                             votoEncontrado = true;
-                            logger.debug("Voto encontrado y marcado como procesado: {}", votoId);
-                        } else {
+                            logger.debug("Voto encontrado y marcado como procesado: {}", votoId);} else {
                             // Mantener registro sin cambios
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
+                                record.get("cedulaVotante"),
                                 record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 record.get("estado")
@@ -358,6 +366,49 @@ public class AlmacenamientoVotosImpl implements AlmacenamientoVotos {
         } catch (IOException e) {
             logger.error("Error al obtener IDs de votos pendientes", e);
             throw new ErrorPersistenciaException("Error al leer el archivo de votos: " + e.getMessage());
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Verifica si una cédula ya ha votado.
+     * 
+     * @param cedulaVotante Cédula del votante a verificar
+     * @return true si la cédula ya ha votado, false en caso contrario
+     * @throws ErrorPersistenciaException si hay un error al consultar el almacenamiento
+     */
+    public boolean cedulaYaVoto(String cedulaVotante) throws ErrorPersistenciaException {
+        logger.info("Verificando si la cédula {} ya ha votado", cedulaVotante);
+        
+        lock.readLock().lock();
+        try {
+            if (!Files.exists(Paths.get(rutaArchivoVotos)) || Files.size(Paths.get(rutaArchivoVotos)) == 0) {
+                logger.debug("Archivo de votos vacío o no existe, cédula {} no ha votado", cedulaVotante);
+                return false;
+            }
+            
+            try (FileReader reader = new FileReader(rutaArchivoVotos, StandardCharsets.UTF_8);
+                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                         .withFirstRecordAsHeader()
+                         .withIgnoreHeaderCase()
+                         .withTrim())) {
+                
+                for (CSVRecord record : csvParser) {
+                    String cedulaEnArchivo = record.get("cedulaVotante");
+                    if (cedulaVotante.equals(cedulaEnArchivo)) {
+                        logger.info("Cédula {} ya ha votado", cedulaVotante);
+                        return true;
+                    }
+                }
+            }
+            
+            logger.debug("Cédula {} no ha votado", cedulaVotante);
+            return false;
+            
+        } catch (IOException e) {
+            logger.error("Error al verificar si la cédula ya votó", e);
+            throw new ErrorPersistenciaException("Error al verificar cédula duplicada: " + e.getMessage());
         } finally {
             lock.readLock().unlock();
         }

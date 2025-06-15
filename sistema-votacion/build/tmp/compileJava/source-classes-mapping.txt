@@ -16,8 +16,8 @@ Votacion/ControllerEstacion.java
  Votacion.ControllerEstacion$1
 com/registraduria/votacion/estacion/monitoreo/SistemaMonitorizacionImpl.java
  com.registraduria.votacion.estacion.monitoreo.SistemaMonitorizacionImpl
-com/registraduria/votacion/centro/CentroVotacionApp.java
- com.registraduria.votacion.centro.CentroVotacionApp
+com/registraduria/votacion/estacion/votacion/GestorEnvioVotosImpl.java
+ com.registraduria.votacion.estacion.votacion.GestorEnvioVotosImpl
 Votacion/ErrorPersistenciaException.java
  Votacion.ErrorPersistenciaException
 Votacion/GestorEnvioVotosCallbackPrx.java
@@ -53,6 +53,8 @@ Votacion/ValidadorDeVotosPrx.java
  Votacion.ValidadorDeVotosPrx
 com/registraduria/votacion/centro/procesamiento/MotorEmisionVotosImpl.java
  com.registraduria.votacion.centro.procesamiento.MotorEmisionVotosImpl
+com/registraduria/votacion/estacion/util/EstacionContext.java
+ com.registraduria.votacion.estacion.util.EstacionContext
 Votacion/GestorRecepcionVotos.java
  Votacion.GestorRecepcionVotos
  Votacion.GestorRecepcionVotos$1
@@ -82,8 +84,8 @@ Votacion/MotorEmisionVotosPrx.java
  Votacion.MotorEmisionVotosPrx
 Votacion/_AlmacenamientoVotosPrxI.java
  Votacion._AlmacenamientoVotosPrxI
-com/registraduria/votacion/centro/recepcion/GestorRecepcionVotosImpl.java
- com.registraduria.votacion.centro.recepcion.GestorRecepcionVotosImpl
+com/registraduria/votacion/estacion/EstacionVotacionApp.java
+ com.registraduria.votacion.estacion.EstacionVotacionApp
 Votacion/SistemaMonitorizacionPrx.java
  Votacion.SistemaMonitorizacionPrx
 Votacion/_ControllerEstacionPrxI.java
@@ -92,7 +94,7 @@ Votacion/_ValidadorDeVotosPrxI.java
  Votacion._ValidadorDeVotosPrxI
 Votacion/Voto.java
  Votacion.Voto
-com/registraduria/votacion/estacion/EstacionVotacionApp.java
- com.registraduria.votacion.estacion.EstacionVotacionApp
-com/registraduria/votacion/estacion/votacion/GestorEnvioVotosImpl.java
- com.registraduria.votacion.estacion.votacion.GestorEnvioVotosImpl
+com/registraduria/votacion/centro/CentroVotacionApp.java
+ com.registraduria.votacion.centro.CentroVotacionApp
+com/registraduria/votacion/centro/recepcion/GestorRecepcionVotosImpl.java
+ com.registraduria.votacion.centro.recepcion.GestorRecepcionVotosImpl

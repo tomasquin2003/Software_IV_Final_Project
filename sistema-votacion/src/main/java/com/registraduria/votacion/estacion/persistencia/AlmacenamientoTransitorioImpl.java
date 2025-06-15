@@ -42,9 +42,8 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
     
     // Lock para gestionar acceso concurrente al archivo
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    
-    // Nombres de las columnas en el archivo CSV
-    private static final String[] HEADERS = {"votoId", "candidatoId", "estacionOrigen", "timestamp", "estado"};
+      // Nombres de las columnas en el archivo CSV
+    private static final String[] HEADERS = {"votoId", "candidatoId", "cedulaVotante", "estacionOrigen", "timestamp", "estado"};
     
     /**
      * Constructor que inicializa el componente con la ruta del archivo y el ID de la estación.
@@ -87,22 +86,20 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
             logger.error("Error al inicializar el archivo de votos transitorios", e);
             throw new RuntimeException("Error al inicializar el almacenamiento transitorio", e);
         }
-    }
-
-    /**
+    }    /**
      * Almacena un voto en estado transitorio.
      * 
      * @param votoId ID único del voto
      * @param candidatoId ID del candidato votado
+     * @param cedulaVotante Cédula del votante
      * @param estado Estado inicial del voto (normalmente PENDIENTE)
      * @param current Contexto de la llamada Ice
      * @throws ErrorPersistenciaException si hay un error al almacenar el voto
      */
-    @Override
-    public void almacenarVotoTransitorio(String votoId, String candidatoId, EstadoVoto estado, Current current) 
+    public void almacenarVotoTransitorio(String votoId, String candidatoId, String cedulaVotante, EstadoVoto estado, Current current) 
             throws ErrorPersistenciaException {
-        logger.info("Almacenando voto transitorio. ID: {}, Candidato: {}, Estado: {}", 
-                votoId, candidatoId, estado);
+        logger.info("Almacenando voto transitorio. ID: {}, Candidato: {}, Cédula: {}, Estado: {}", 
+                votoId, candidatoId, cedulaVotante, estado);
         
         lock.writeLock().lock();
         try {
@@ -119,10 +116,10 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
                         if (record.get("votoId").equals(votoId)) {
                             throw new ErrorPersistenciaException("El voto con ID " + votoId + " ya existe");
                         }
-                        
-                        registros.add(new String[] {
+                          registros.add(new String[] {
                             record.get("votoId"),
                             record.get("candidatoId"),
+                            record.get("cedulaVotante"),
                             record.get("estacionOrigen"),
                             record.get("timestamp"),
                             record.get("estado")
@@ -133,11 +130,11 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
             
             // Timestamp actual
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            
-            // Agregar nuevo registro
+              // Agregar nuevo registro
             registros.add(new String[] {
                 votoId,
                 candidatoId,
+                cedulaVotante,
                 estacionId,
                 timestamp,
                 estado.toString()
@@ -161,6 +158,16 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    /**
+     * Método original para mantener compatibilidad con la interfaz Ice.
+     */
+    @Override
+    public void almacenarVotoTransitorio(String votoId, String candidatoId, EstadoVoto estado, Current current) 
+            throws ErrorPersistenciaException {
+        // Llamar al método extendido con cedulaVotante como "DESCONOCIDA" para votos legacy
+        almacenarVotoTransitorio(votoId, candidatoId, "DESCONOCIDA", estado, current);
     }
 
     @Override
@@ -294,12 +301,12 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
                     
                     for (CSVRecord record : parser) {
                         String id = record.get("votoId");
-                        
-                        if (id.equals(votoId)) {
+                          if (id.equals(votoId)) {
                             // Actualizar estado a PROCESADO
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
+                                record.get("cedulaVotante"),
                                 record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 EstadoVoto.PROCESADO.toString()
@@ -311,6 +318,7 @@ public class AlmacenamientoTransitorioImpl implements AlmacenamientoTransitorio 
                             registros.add(new String[] {
                                 id,
                                 record.get("candidatoId"),
+                                record.get("cedulaVotante"),
                                 record.get("estacionOrigen"),
                                 record.get("timestamp"),
                                 record.get("estado")

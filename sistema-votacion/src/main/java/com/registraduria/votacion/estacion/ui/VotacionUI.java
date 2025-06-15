@@ -109,10 +109,9 @@ public class VotacionUI {
                 if (autenticarVotante(cedula)) {
                     // Mostrar candidatos y solicitar voto
                     String candidatoId = solicitarVoto();
-                    
-                    if (candidatoId != null) {
-                        // Enviar voto
-                        String votoId = gestorEnvioVotos.enviarVoto(candidatoId);
+                      if (candidatoId != null) {
+                        // CAMBIO CRÍTICO: Enviar voto con la cédula del votante
+                        String votoId = gestorEnvioVotos.enviarVoto(candidatoId, cedula);
                         mostrarConfirmacion(votoId);
                     }
                 }

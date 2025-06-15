@@ -91,11 +91,10 @@ public class CentroVotacionApp {
             Identity validadorId = new Identity(validadorServantName, "");
             adapter.add((ValidadorDeVotos) validadorImpl, validadorId);
             ValidadorDeVotosPrx validadorPrx = ValidadorDeVotosPrx.uncheckedCast(adapter.createProxy(validadorId));
-            
-            // Crear instancia de AlmacenamientoVotos y agregarla al adaptador
-            AlmacenamientoVotos almacenamientoServant = new AlmacenamientoVotosImpl(votosRecibidosFile);
+              // Crear instancia de AlmacenamientoVotos y agregarla al adaptador
+            AlmacenamientoVotosImpl almacenamientoServant = new AlmacenamientoVotosImpl(votosRecibidosFile);
             Identity almacenamientoId = new Identity(almacenamientoServantName, "");
-            adapter.add(almacenamientoServant, almacenamientoId);
+            adapter.add((AlmacenamientoVotos) almacenamientoServant, almacenamientoId);
             AlmacenamientoVotosPrx almacenamientoPrx = AlmacenamientoVotosPrx.uncheckedCast(adapter.createProxy(almacenamientoId));
             
             // Crear instancia de MotorEmisionVotos y agregarla al adaptador
@@ -103,10 +102,9 @@ public class CentroVotacionApp {
             Identity motorEmisionId = new Identity(motorEmisionServantName, "");
             adapter.add((MotorEmisionVotos) motorEmisionServant, motorEmisionId);
             MotorEmisionVotosPrx motorEmisionPrx = MotorEmisionVotosPrx.uncheckedCast(adapter.createProxy(motorEmisionId));
-            
-            // Crear instancia de GestorRecepcionVotos y agregarla al adaptador
+              // Crear instancia de GestorRecepcionVotos y agregarla al adaptador
             GestorRecepcionVotos gestorRecepcionServant = new GestorRecepcionVotosImpl(
-                    almacenamientoPrx, validadorPrx, motorEmisionPrx, validadorImpl);
+                    almacenamientoPrx, validadorPrx, motorEmisionPrx, validadorImpl, almacenamientoServant);
             Identity gestorRecepcionId = new Identity(gestorRecepcionServantName, "");
             adapter.add(gestorRecepcionServant, gestorRecepcionId);
             

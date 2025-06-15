@@ -23,9 +23,11 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class ValidadorDeVotosImpl implements ValidadorDeVotos {
     private static final Logger logger = LoggerFactory.getLogger(ValidadorDeVotosImpl.class);
-    
-    // Conjunto para almacenar los IDs de votos ya procesados
+      // Conjunto para almacenar los IDs de votos ya procesados
     private final Set<String> votosRecibidos = Collections.synchronizedSet(new HashSet<>());
+    
+    // Conjunto para almacenar las cédulas que ya han votado
+    private final Set<String> cedulasQueVotaron = Collections.synchronizedSet(new HashSet<>());
     
     // Lock para acceso concurrente al conjunto de votos
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -40,11 +42,11 @@ public class ValidadorDeVotosImpl implements ValidadorDeVotos {
      */
     public ValidadorDeVotosImpl(String rutaArchivoVotos) {
         this.rutaArchivoVotos = rutaArchivoVotos;
-        
-        // Cargar votos recibidos desde el archivo
+          // Cargar votos recibidos desde el archivo
         cargarVotosRecibidos();
         
-        logger.info("ValidadorDeVotos inicializado con {} votos registrados", votosRecibidos.size());
+        logger.info("ValidadorDeVotos inicializado con {} votos registrados y {} cédulas que votaron", 
+                    votosRecibidos.size(), cedulasQueVotaron.size());
     }
     
     /**
@@ -60,13 +62,24 @@ public class ValidadorDeVotosImpl implements ValidadorDeVotos {
                          .withFirstRecordAsHeader()
                          .withIgnoreHeaderCase()
                          .withTrim())) {
-                
-                for (CSVRecord csvRecord : csvParser) {
+                  for (CSVRecord csvRecord : csvParser) {
                     String votoId = csvRecord.get("votoId");
                     votosRecibidos.add(votoId);
+                    
+                    // También cargar la cédula si está disponible
+                    try {
+                        String cedulaVotante = csvRecord.get("cedulaVotante");
+                        if (cedulaVotante != null && !cedulaVotante.isEmpty() && !cedulaVotante.equals("DESCONOCIDA")) {
+                            cedulasQueVotaron.add(cedulaVotante);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        // La columna cedulaVotante no existe en registros antiguos, se ignora
+                        logger.debug("Columna cedulaVotante no encontrada en registro con votoId: {}", votoId);
+                    }
                 }
                 
-                logger.info("Se cargaron {} votos recibidos", votosRecibidos.size());
+                logger.info("Se cargaron {} votos recibidos y {} cédulas que votaron", 
+                           votosRecibidos.size(), cedulasQueVotaron.size());
                 
             } catch (IOException e) {
                 logger.warn("No se pudo cargar el archivo de votos recibidos: {}", e.getMessage());
@@ -105,22 +118,69 @@ public class ValidadorDeVotosImpl implements ValidadorDeVotos {
             lock.readLock().unlock();
         }
     }
-    
+      /**
+     * Verifica si una cédula ya ha sido usada para votar.
+     * 
+     * @param cedulaVotante Cédula del votante a verificar
+     * @return true si la cédula no ha votado, false si ya votó
+     */
+    public boolean validarCedulaUnica(String cedulaVotante) {
+        logger.info("Validando unicidad de la cédula: {}", cedulaVotante);
+        
+        if (cedulaVotante == null || cedulaVotante.isEmpty() || cedulaVotante.equals("DESCONOCIDA")) {
+            logger.warn("Cédula inválida o desconocida: {}", cedulaVotante);
+            return false; // Rechazar votos sin cédula válida
+        }
+        
+        lock.readLock().lock();
+        try {
+            boolean esUnica = !cedulasQueVotaron.contains(cedulaVotante);
+            
+            if (esUnica) {
+                logger.info("Cédula {} no ha votado anteriormente", cedulaVotante);
+            } else {
+                logger.warn("Cédula {} ya ha sido usada para votar", cedulaVotante);
+            }
+            
+            return esUnica;
+            
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
     /**
      * Registra un voto como procesado para evitar duplicados.
      * Este método se llama internamente desde GestorRecepcionVotos.
      * 
      * @param votoId ID del voto a registrar
+     * @param cedulaVotante Cédula del votante que emitió el voto
      */
-    public void registrarVotoProcesado(String votoId) {
-        logger.info("Registrando voto procesado con ID: {}", votoId);
+    public void registrarVotoProcesado(String votoId, String cedulaVotante) {
+        logger.info("Registrando voto procesado con ID: {} y cédula: {}", votoId, cedulaVotante);
         
         lock.writeLock().lock();
         try {
             votosRecibidos.add(votoId);
+            
+            if (cedulaVotante != null && !cedulaVotante.isEmpty() && !cedulaVotante.equals("DESCONOCIDA")) {
+                cedulasQueVotaron.add(cedulaVotante);
+                logger.debug("Cédula {} registrada como votante", cedulaVotante);
+            }
+            
             logger.debug("Voto con ID {} registrado como procesado", votoId);
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    /**
+     * Registra un voto como procesado para evitar duplicados (método legacy).
+     * Este método se mantiene para compatibilidad con código existente.
+     * 
+     * @param votoId ID del voto a registrar
+     */
+    public void registrarVotoProcesado(String votoId) {
+        registrarVotoProcesado(votoId, null);
     }
 }
