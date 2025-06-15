@@ -1,5 +1,9 @@
 package com.registraduria.votacion.centro;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Map;
+
 import Votacion.AlmacenamientoVotos;
 import Votacion.AlmacenamientoVotosPrx;
 import Votacion.GestorRecepcionVotos;
@@ -110,40 +114,52 @@ public class CentroVotacionApp {
             adapter.activate();
             
             logger.info("Centro de Votación activado en: {}", endpoints);
-            
-            // Interfaz simple para mostrar resultados
+
+
+
+
             Thread uiThread = new Thread(() -> {
-                Scanner scanner = new Scanner(System.in);
-                
-                while (true) {
-                    System.out.println("\n=== CENTRO DE VOTACIÓN - MENÚ ===");
-                    System.out.println("1. Mostrar resultados actuales");
-                    System.out.println("2. Salir");
-                    System.out.print("Seleccione una opción: ");
-                    
-                    String opcion = scanner.nextLine().trim();
-                    
-                    if (opcion.equals("1")) {
-                        System.out.println("\n=== RESULTADOS ACTUALES ===");
-                        System.out.println("CANDIDATO                    | VOTOS");
-                        System.out.println("-----------------------------+-------");
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+                    while (true) {
+                        System.out.println("\n=== CENTRO DE VOTACIÓN - MENÚ ===");
+                        System.out.println("1. Mostrar resultados actuales");
+                        System.out.println("2. Salir");
+                        System.out.print("Seleccione una opción: ");
                         
-                        // En el método para mostrar resultados
-                        motorEmisionServant.obtenerResultados().forEach((candidatoId, conteo) -> {
-                            String nombre = motorEmisionServant.getNombreCandidato(candidatoId);
-                            System.out.printf("%-28s | %5d%n", nombre, conteo);
+                        String opcion = reader.readLine();
+                        if (opcion == null) {
+                            break; // End of stream
+                        }
+                        
+                        opcion = opcion.trim();
+                        
+                        // Mismo código de manejo de opciones, pero añade try-catch dentro del loop
+                        try {
+                            if (opcion.equals("1")) {
+                                System.out.println("\n=== RESULTADOS ACTUALES ===");
+                                System.out.println("CANDIDATO                    | VOTOS");
+                                System.out.println("-----------------------------+-------");
+                                
+                                // En el método para mostrar resultados
+                                motorEmisionServant.obtenerResultados().forEach((candidatoId, conteo) -> {
+                                    String nombre = motorEmisionServant.getNombreCandidato(candidatoId);
+                                    System.out.printf("%-28s | %5d%n", nombre, conteo);
                         });
-                        
-                    } else if (opcion.equals("2")) {
-                        logger.info("Cerrando Centro de Votación...");
-                        communicator.shutdown();
-                        break;
-                    } else {
-                        System.out.println("Opción no válida. Intente de nuevo.");
+                            } else if (opcion.equals("2")) {
+                                logger.info("Cerrando Centro de Votación...");
+                                communicator.shutdown();
+                                break;
+                            } else {
+                                System.out.println("Opción no válida. Intente de nuevo.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Error procesando la opción: " + e.getMessage());
+                            logger.error("Error en UI", e);
+                        }
                     }
+                } catch (Exception e) {
+                    logger.error("Error fatal en thread UI", e);
                 }
-                
-                scanner.close();
             });
             
             uiThread.start();

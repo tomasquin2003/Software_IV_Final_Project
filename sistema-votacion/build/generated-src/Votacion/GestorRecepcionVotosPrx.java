@@ -17,14 +17,14 @@ package Votacion;
 
 public interface GestorRecepcionVotosPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default void recibirVoto(Voto voto, GestorEnvioVotosCallback callback)
+    default void recibirVoto(Voto voto, GestorEnvioVotosCallbackPrx callback)
         throws ErrorPersistenciaException,
                VotoDuplicadoException
     {
         recibirVoto(voto, callback, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void recibirVoto(Voto voto, GestorEnvioVotosCallback callback, java.util.Map<String, String> context)
+    default void recibirVoto(Voto voto, GestorEnvioVotosCallbackPrx callback, java.util.Map<String, String> context)
         throws ErrorPersistenciaException,
                VotoDuplicadoException
     {
@@ -46,12 +46,12 @@ public interface GestorRecepcionVotosPrx extends com.zeroc.Ice.ObjectPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> recibirVotoAsync(Voto voto, GestorEnvioVotosCallback callback)
+    default java.util.concurrent.CompletableFuture<Void> recibirVotoAsync(Voto voto, GestorEnvioVotosCallbackPrx callback)
     {
         return _iceI_recibirVotoAsync(voto, callback, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> recibirVotoAsync(Voto voto, GestorEnvioVotosCallback callback, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> recibirVotoAsync(Voto voto, GestorEnvioVotosCallbackPrx callback, java.util.Map<String, String> context)
     {
         return _iceI_recibirVotoAsync(voto, callback, context, false);
     }
@@ -64,13 +64,12 @@ public interface GestorRecepcionVotosPrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_recibirVotoAsync(Voto iceP_voto, GestorEnvioVotosCallback iceP_callback, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_recibirVotoAsync(Voto iceP_voto, GestorEnvioVotosCallbackPrx iceP_callback, java.util.Map<String, String> context, boolean sync)
     {
         com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "recibirVoto", null, sync, _iceE_recibirVoto);
         f.invoke(true, context, null, ostr -> {
                      Voto.ice_write(ostr, iceP_voto);
-                     ostr.writeValue(iceP_callback);
-                     ostr.writePendingValues();
+                     ostr.writeProxy(iceP_callback);
                  }, null);
         return f;
     }

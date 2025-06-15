@@ -3,14 +3,11 @@ package com.registraduria.votacion.centro.recepcion;
 import Votacion.AlmacenamientoVotosPrx;
 import Votacion.ErrorPersistenciaException;
 import Votacion.EstadoVoto;
-import Votacion.GestorEnvioVotosCallback;
 import Votacion.GestorRecepcionVotos;
 import Votacion.MotorEmisionVotosPrx;
 import Votacion.ValidadorDeVotosPrx;
 import Votacion.Voto;
 import Votacion.VotoDuplicadoException;
-
-import com.registraduria.votacion.estacion.votacion.GestorEnvioVotosImpl;
 
 import com.registraduria.votacion.centro.validacion.ValidadorDeVotosImpl;
 import com.zeroc.Ice.Current;
@@ -85,18 +82,17 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
         logger.info("Tarea de verificación de votos pendientes programada cada {} segundos", 
                 INTERVALO_VERIFICACION_PENDIENTES);
     }
-    
-    /**
+      /**
      * Recibe un voto de una Estación de Votación.
      * 
      * @param voto Voto recibido
-     * @param callback Callback (objeto GestorEnvioVotosCallback pasado por valor)
+     * @param callback Callback proxy para confirmar la recepción del voto
      * @param current Contexto de la llamada Ice (añadido por Ice a la implementación del sirviente)
      * @throws VotoDuplicadoException si el voto ya ha sido procesado
      * @throws ErrorPersistenciaException si hay un error al almacenar el voto
      */
     @Override
-    public void recibirVoto(Voto voto, Votacion.GestorEnvioVotosCallback callback, Current current) 
+    public void recibirVoto(Voto voto, Votacion.GestorEnvioVotosCallbackPrx callback, Current current) 
             throws VotoDuplicadoException, ErrorPersistenciaException {
         
         logger.info("Recibido voto. ID: {}, Candidato: {}, Estación: {}", 
@@ -106,12 +102,10 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
         boolean esUnico = validadorDeVotos.validarVotoUnico(voto.votoId);
         
         if (!esUnico) {
-            logger.warn("Voto duplicado detectado. ID: {}", voto.votoId);
-            // Enviar confirmación de que ya fue procesado (para evitar reenvíos)
+            logger.warn("Voto duplicado detectado. ID: {}", voto.votoId);            // Enviar confirmación de que ya fue procesado (para evitar reenvíos)
             try {
-                // Castear callback a GestorEnvioVotosImpl para acceder al método
-                ((GestorEnvioVotosImpl) callback)
-                    .confirmarRecepcionVoto(voto.votoId, EstadoVoto.PROCESADO);
+                // CORRECCIÓN: Usar el proxy directamente
+                callback.confirmarRecepcionVoto(voto.votoId, EstadoVoto.PROCESADO);
             } catch (Exception e) {
                 logger.error("Error al enviar confirmación de voto duplicado", e);
             }
@@ -120,14 +114,10 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
         
         // Registrar voto como recibido
         try {
-            almacenamientoVotos.registrarVotoRecibido(voto.votoId, voto.candidatoId, voto.estacionOrigen, EstadoVoto.RECIBIDO);
-            logger.info("Voto registrado como RECIBIDO. ID: {}", voto.votoId);
-            
-            // Enviar confirmación de recepción
+            almacenamientoVotos.registrarVotoRecibido(voto.votoId, voto.candidatoId, voto.estacionOrigen, EstadoVoto.RECIBIDO);            // Enviar confirmación de recepción
             try {
-                // Castear callback a GestorEnvioVotosImpl para acceder al método
-                ((GestorEnvioVotosImpl) callback)
-                    .confirmarRecepcionVoto(voto.votoId, EstadoVoto.RECIBIDO);
+                // CORRECCIÓN: Usar el proxy directamente
+                callback.confirmarRecepcionVoto(voto.votoId, EstadoVoto.RECIBIDO);
                 logger.debug("Confirmación de recepción enviada. ID: {}", voto.votoId);
             } catch (Exception e) {
                 logger.error("Error al enviar confirmación de recepción", e);
@@ -145,18 +135,13 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
             throw new ErrorPersistenciaException("Error inesperado al recibir voto: " + e.getMessage());
         }
     }
-    
-    /**
+      /**
      * Procesa un voto validándolo, registrándolo y enviando confirmación.
      * 
      * @param voto Voto a procesar
-     * @param callback Callback para enviar confirmación
+     * @param callback Callback proxy para enviar confirmación
      */
-    private void procesarVoto(Voto voto, Votacion.GestorEnvioVotosCallback callback) {
-        logger.info("Procesando voto en segundo plano. ID: {}", voto.votoId);
-        
-        GestorEnvioVotosImpl callbackImpl = (GestorEnvioVotosImpl) callback;
-
+    private void procesarVoto(Voto voto, Votacion.GestorEnvioVotosCallbackPrx callback) {
         try {
             // Procesar el voto en el motor de emisión
             motorEmisionVotos.procesarVotoValidado(voto.candidatoId);
@@ -164,15 +149,15 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
             
             // Marcar voto como procesado en el almacenamiento
             almacenamientoVotos.marcarVotoProcesado(voto.votoId);
-            logger.info("Voto marcado como PROCESADO en almacenamiento. ID: {}", voto.votoId);
+            logger.debug("Voto marcado como PROCESADO. ID: {}", voto.votoId);
             
-            // Registrar voto como procesado en el validador para evitar duplicados
+            // Registrar voto como procesado en el validador
             validadorImpl.registrarVotoProcesado(voto.votoId);
-            logger.debug("Voto registrado en validador para evitar duplicados. ID: {}", voto.votoId);
-            
-            // Enviar confirmación final
+            logger.debug("Voto registrado en validador. ID: {}", voto.votoId);
+              // Enviar confirmación final de procesamiento
             try {
-                callbackImpl.confirmarRecepcionVoto(voto.votoId, EstadoVoto.PROCESADO);
+                // CORRECCIÓN: Usar el proxy directamente
+                callback.confirmarRecepcionVoto(voto.votoId, EstadoVoto.PROCESADO);
                 logger.info("Confirmación final enviada. ID: {}", voto.votoId);
             } catch (Exception e) {
                 logger.error("Error al enviar confirmación final", e);
@@ -181,11 +166,11 @@ public class GestorRecepcionVotosImpl implements GestorRecepcionVotos {
             
         } catch (Exception e) {
             logger.error("Error al procesar voto", e);
-            
-            // Intentar enviar notificación de error
+              // Intentar enviar notificación de error
             try {
-                callbackImpl.confirmarRecepcionVoto(voto.votoId, EstadoVoto.ERROR);
-                logger.warn("Notificación de error enviada. ID: {}", voto.votoId);
+                // CORRECCIÓN: Usar el proxy directamente
+                callback.confirmarRecepcionVoto(voto.votoId, EstadoVoto.ERROR);
+                logger.debug("Notificación de error enviada. ID: {}", voto.votoId);
             } catch (Exception ex) {
                 logger.error("Error al enviar notificación de error", ex);
             }

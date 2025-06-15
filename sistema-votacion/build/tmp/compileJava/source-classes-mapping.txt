@@ -20,11 +20,11 @@ com/registraduria/votacion/centro/CentroVotacionApp.java
  com.registraduria.votacion.centro.CentroVotacionApp
 Votacion/ErrorPersistenciaException.java
  Votacion.ErrorPersistenciaException
+Votacion/GestorEnvioVotosCallbackPrx.java
+ Votacion.GestorEnvioVotosCallbackPrx
 Votacion/VerificadorAsignacion.java
  Votacion.VerificadorAsignacion
  Votacion.VerificadorAsignacion$1
-Votacion/GestorEnvioVotosCallbackPrx.java
- Votacion.GestorEnvioVotosCallbackPrx
 Votacion/GestorRecepcionVotosPrx.java
  Votacion.GestorRecepcionVotosPrx
 Votacion/VerificadorAsignacionPrx.java
@@ -32,10 +32,11 @@ Votacion/VerificadorAsignacionPrx.java
 com/registraduria/votacion/estacion/ui/VotacionUI.java
  com.registraduria.votacion.estacion.ui.VotacionUI
  com.registraduria.votacion.estacion.ui.VotacionUI$Candidato
-Votacion/GestorEnvioVotosCallback.java
- Votacion.GestorEnvioVotosCallback
 Votacion/ControllerEstacionPrx.java
  Votacion.ControllerEstacionPrx
+Votacion/GestorEnvioVotosCallback.java
+ Votacion.GestorEnvioVotosCallback
+ Votacion.GestorEnvioVotosCallback$1
 Votacion/VotoDuplicadoException.java
  Votacion.VotoDuplicadoException
 com/registraduria/votacion/centro/validacion/ValidadorDeVotosImpl.java
@@ -73,9 +74,6 @@ Votacion/SistemaMonitorizacion.java
 Votacion/AlmacenamientoTransitorio.java
  Votacion.AlmacenamientoTransitorio
  Votacion.AlmacenamientoTransitorio$1
-Votacion/GestorEnvioVotosCallbackDisp.java
- Votacion.GestorEnvioVotosCallbackDisp
- Votacion.GestorEnvioVotosCallbackDisp$1
 Votacion/VotanteNoAutorizadoException.java
  Votacion.VotanteNoAutorizadoException
 Votacion/EstadoVoto.java

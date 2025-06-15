@@ -24,11 +24,11 @@ module Votacion {
 
     interface MotorEmisionVotos {
         void procesarVotoValidado(string candidatoId);
-    };
-
+    };    
+    
     interface GestorRecepcionVotos {
-        // Corregir la sintaxis: eliminar el asterisco (*) después de GestorEnvioVotosCallback
-        void recibirVoto(Voto voto, GestorEnvioVotosCallback callback)
+        // Usar proxy (asterisco) para callback remoto
+        void recibirVoto(Voto voto, GestorEnvioVotosCallback* callback)
             throws VotoDuplicadoException, ErrorPersistenciaException;
     };
 };

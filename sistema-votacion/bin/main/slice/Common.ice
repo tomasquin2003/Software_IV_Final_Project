@@ -26,8 +26,7 @@ module Votacion {
         string mensaje;
     };
 
-    // Interfaces comunes usadas por ambos sistemas
-    class GestorEnvioVotosCallback {
-        void confirmarRecepcionVoto(string votoId, EstadoVoto estado);
+    interface GestorEnvioVotosCallback {
+    void confirmarRecepcionVoto(string votoId, EstadoVoto estado);
     };
 };

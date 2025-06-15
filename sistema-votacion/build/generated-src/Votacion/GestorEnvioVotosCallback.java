@@ -15,40 +15,100 @@
 
 package Votacion;
 
-public class GestorEnvioVotosCallback extends com.zeroc.Ice.Value
+public interface GestorEnvioVotosCallback extends com.zeroc.Ice.Object
 {
-    public GestorEnvioVotosCallback clone()
-    {
-        return (GestorEnvioVotosCallback)super.clone();
-    }
+    void confirmarRecepcionVoto(String votoId, EstadoVoto estado, com.zeroc.Ice.Current current);
 
-    public static String ice_staticId()
+    /** @hidden */
+    static final String[] _iceIds =
     {
-        return "::Votacion::GestorEnvioVotosCallback";
+        "::Ice::Object",
+        "::Votacion::GestorEnvioVotosCallback"
+    };
+
+    @Override
+    default String[] ice_ids(com.zeroc.Ice.Current current)
+    {
+        return _iceIds;
     }
 
     @Override
-    public String ice_id()
+    default String ice_id(com.zeroc.Ice.Current current)
     {
         return ice_staticId();
     }
 
-    /** @hidden */
-    public static final long serialVersionUID = -1905456735L;
-
-    /** @hidden */
-    @Override
-    protected void _iceWriteImpl(com.zeroc.Ice.OutputStream ostr_)
+    static String ice_staticId()
     {
-        ostr_.startSlice(ice_staticId(), -1, true);
-        ostr_.endSlice();
+        return "::Votacion::GestorEnvioVotosCallback";
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_confirmarRecepcionVoto(GestorEnvioVotosCallback obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        com.zeroc.Ice.InputStream istr = inS.startReadParams();
+        String iceP_votoId;
+        EstadoVoto iceP_estado;
+        iceP_votoId = istr.readString();
+        iceP_estado = EstadoVoto.ice_read(istr);
+        inS.endReadParams();
+        obj.confirmarRecepcionVoto(iceP_votoId, iceP_estado, current);
+        return inS.setResult(inS.writeEmptyParams());
     }
 
     /** @hidden */
-    @Override
-    protected void _iceReadImpl(com.zeroc.Ice.InputStream istr_)
+    final static String[] _iceOps =
     {
-        istr_.startSlice();
-        istr_.endSlice();
+        "confirmarRecepcionVoto",
+        "ice_id",
+        "ice_ids",
+        "ice_isA",
+        "ice_ping"
+    };
+
+    /** @hidden */
+    @Override
+    default java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceDispatch(com.zeroc.IceInternal.Incoming in, com.zeroc.Ice.Current current)
+        throws com.zeroc.Ice.UserException
+    {
+        int pos = java.util.Arrays.binarySearch(_iceOps, current.operation);
+        if(pos < 0)
+        {
+            throw new com.zeroc.Ice.OperationNotExistException(current.id, current.facet, current.operation);
+        }
+
+        switch(pos)
+        {
+            case 0:
+            {
+                return _iceD_confirmarRecepcionVoto(this, in, current);
+            }
+            case 1:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+            }
+            case 2:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+            }
+            case 3:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+            }
+            case 4:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+            }
+        }
+
+        assert(false);
+        throw new com.zeroc.Ice.OperationNotExistException(current.id, current.facet, current.operation);
     }
 }

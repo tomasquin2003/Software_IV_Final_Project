@@ -122,10 +122,11 @@ public class EstacionVotacionApp {
             if (centroVotacionPrx == null) {
                 throw new RuntimeException("Proxy inválido para el Centro de Votación");
             }
-            
-            // Crear instancia de GestorEnvioVotos
+              // Crear instancia de GestorEnvioVotos y agregarla al adaptador
             GestorEnvioVotosImpl gestorEnvioServant = new GestorEnvioVotosImpl(
-                    almacenamientoPrx, centroVotacionPrx, estacionId);
+                    almacenamientoPrx, centroVotacionPrx, estacionId, adapter);
+            Identity gestorEnvioId = new Identity(gestorEnvioServantName, "");
+            adapter.add((GestorEnvioVotosCallback) gestorEnvioServant, gestorEnvioId);
             
             // Activar el adaptador
             adapter.activate();
