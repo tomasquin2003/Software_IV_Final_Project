@@ -17,7 +17,7 @@ package Votacion;
 
 public interface GestorRecepcionVotos extends com.zeroc.Ice.Object
 {
-    void recibirVoto(Voto voto, GestorEnvioVotosCallback callback, com.zeroc.Ice.Current current)
+    void recibirVoto(Voto voto, GestorEnvioVotosCallbackPrx callback, com.zeroc.Ice.Current current)
         throws ErrorPersistenciaException,
                VotoDuplicadoException;
 
@@ -59,12 +59,10 @@ public interface GestorRecepcionVotos extends com.zeroc.Ice.Object
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
         Voto iceP_voto;
-        final com.zeroc.IceInternal.Holder<GestorEnvioVotosCallback> icePP_callback = new com.zeroc.IceInternal.Holder<>();
+        GestorEnvioVotosCallbackPrx iceP_callback;
         iceP_voto = Voto.ice_read(istr);
-        istr.readValue(v -> icePP_callback.value = v, GestorEnvioVotosCallback.class);
-        istr.readPendingValues();
+        iceP_callback = GestorEnvioVotosCallbackPrx.uncheckedCast(istr.readProxy());
         inS.endReadParams();
-        GestorEnvioVotosCallback iceP_callback = icePP_callback.value;
         obj.recibirVoto(iceP_voto, iceP_callback, current);
         return inS.setResult(inS.writeEmptyParams());
     }

@@ -4,6 +4,7 @@ import Votacion.AlmacenamientoTransitorioPrx;
 import Votacion.ErrorPersistenciaException;
 import Votacion.EstadoVoto;
 import Votacion.GestorEnvioVotosCallback;
+import Votacion.GestorEnvioVotosCallbackPrx;
 import Votacion.GestorRecepcionVotosPrx;
 import Votacion.Voto;
 import Votacion.VotoDuplicadoException;
@@ -22,17 +23,19 @@ import java.util.concurrent.TimeUnit;
  * Implementación del GestorEnvioVotos y GestorEnvioVotosCallback que maneja el envío confiable
  * de votos al Centro de Votación, incluyendo reintentos y confirmaciones.
  */
-public class GestorEnvioVotosImpl extends Votacion.GestorEnvioVotosCallback {
+public class GestorEnvioVotosImpl implements Votacion.GestorEnvioVotosCallback {
     private static final Logger logger = LoggerFactory.getLogger(GestorEnvioVotosImpl.class);
     
     // Proxy para acceder al servicio de almacenamiento transitorio
     private final AlmacenamientoTransitorioPrx almacenamientoTransitorio;
-    
-    // Proxy para acceder al servicio de recepción de votos en el Centro
+      // Proxy para acceder al servicio de recepción de votos en el Centro
     private final GestorRecepcionVotosPrx gestorRecepcionVotos;
     
     // ID de la estación de votación
     private final String estacionId;
+    
+    // Adaptador Ice para crear proxies
+    private final com.zeroc.Ice.ObjectAdapter adapter;
 
     // Servicio para programar reintentos periódicos
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -40,23 +43,24 @@ public class GestorEnvioVotosImpl extends Votacion.GestorEnvioVotosCallback {
     // Intervalos para reintentos (en segundos)
     private static final int INTERVALO_REINTENTO_INICIAL = 5;
     private static final int INTERVALO_VERIFICACION_PENDIENTES = 30;
-    private static final int MAX_REINTENTOS = 10;
-
-    /**
+    private static final int MAX_REINTENTOS = 10;    /**
      * Constructor que inicializa el gestor con las dependencias necesarias.
      * 
      * @param almacenamientoTransitorio Proxy para el servicio de almacenamiento transitorio
      * @param gestorRecepcionVotos Proxy para el servicio de recepción de votos
      * @param estacionId ID de la estación de votación
+     * @param adapter Adaptador Ice para crear proxies
      */
     public GestorEnvioVotosImpl(
             AlmacenamientoTransitorioPrx almacenamientoTransitorio,
             GestorRecepcionVotosPrx gestorRecepcionVotos,
-            String estacionId) {
+            String estacionId,
+            com.zeroc.Ice.ObjectAdapter adapter) {
         
         this.almacenamientoTransitorio = almacenamientoTransitorio;
         this.gestorRecepcionVotos = gestorRecepcionVotos;
         this.estacionId = estacionId;
+        this.adapter = adapter;
         
         logger.info("GestorEnvioVotos inicializado. Estación ID: {}", estacionId);
         
@@ -78,6 +82,7 @@ public class GestorEnvioVotosImpl extends Votacion.GestorEnvioVotosCallback {
         logger.info("Tarea de verificación de votos pendientes programada cada {} segundos", 
                 INTERVALO_VERIFICACION_PENDIENTES);
     }
+    
     
     /**
      * Método para que el votante emita su voto.
@@ -117,11 +122,15 @@ public class GestorEnvioVotosImpl extends Votacion.GestorEnvioVotosCallback {
      * @param voto Objeto Voto a enviar
      */
     private void enviarVotoAlCentro(Voto voto) {
-        logger.info("Enviando voto al Centro. ID: {}", voto.votoId);
-        
-        try {
-            // Enviar el voto al Centro usando 'this' como el objeto callback por valor
-            gestorRecepcionVotos.recibirVoto(voto, this); 
+        logger.info("Enviando voto al Centro. ID: {}", voto.votoId);        try {
+            // Usar el proxy del callback que ya está registrado en el adaptador
+            // El ID debe coincidir con el usado en EstacionVotacionApp
+            com.zeroc.Ice.Identity callbackId = new com.zeroc.Ice.Identity("GestorEnvioVotos", "");
+            Votacion.GestorEnvioVotosCallbackPrx callbackPrx = 
+                Votacion.GestorEnvioVotosCallbackPrx.uncheckedCast(adapter.createProxy(callbackId));
+            
+            // Enviar el voto al Centro usando el proxy del callback
+            gestorRecepcionVotos.recibirVoto(voto, callbackPrx); 
             logger.info("Voto enviado al Centro exitosamente. ID: {}", voto.votoId);
         } catch (VotoDuplicadoException e) {
             // Si el voto ya fue procesado, marcarlo como confirmado
@@ -176,15 +185,15 @@ public class GestorEnvioVotosImpl extends Votacion.GestorEnvioVotosCallback {
         } catch (Exception e) {
             logger.error("Error al verificar y reenviar votos pendientes", e);
         }
-    }
-
-    /**
+    }    /**
      * Callback invocado por el Centro cuando se confirma la recepción de un voto.
      * 
      * @param votoId ID del voto confirmado
      * @param estado Estado del voto en el Centro
+     * @param current Contexto de la llamada Ice
      */
-    public void confirmarRecepcionVoto(String votoId, EstadoVoto estado) {
+    @Override
+    public void confirmarRecepcionVoto(String votoId, EstadoVoto estado, com.zeroc.Ice.Current current) {
         logger.info("Recibida confirmación del Centro. Voto ID: {}, Estado: {}", votoId, estado);
         
         try {
