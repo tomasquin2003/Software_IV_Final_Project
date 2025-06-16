@@ -52,6 +52,8 @@ com/registraduria/votacion/centro/recepcion/GestorRecepcionVotosImpl.java
  com.registraduria.votacion.centro.recepcion.GestorRecepcionVotosImpl
 Votacion/PortalConsultasPrx.java
  Votacion.PortalConsultasPrx
+com/registraduria/votacion/database/router/QueryRouterImpl.java
+ com.registraduria.votacion.database.router.QueryRouterImpl
 Votacion/EstadoImportacion.java
  Votacion.EstadoImportacion
 Votacion/SubscriberManager.java
@@ -106,10 +108,10 @@ Votacion/CacheRegionalPrx.java
 Votacion/ConnectionManager.java
  Votacion.ConnectionManager
  Votacion.ConnectionManager$1
-Votacion/CacheServicePrx.java
- Votacion.CacheServicePrx
 Votacion/TipoConsulta.java
  Votacion.TipoConsulta
+Votacion/CacheServicePrx.java
+ Votacion.CacheServicePrx
 Votacion/EstadoVoto.java
  Votacion.EstadoVoto
 Votacion/ConfiguracionMesa.java
@@ -172,11 +174,11 @@ Votacion/CircuitBreakerException.java
  Votacion.CircuitBreakerException
 Votacion/ImportacionException.java
  Votacion.ImportacionException
-Votacion/CandidatoData.java
- Votacion.CandidatoData
 Votacion/QueryRouter.java
  Votacion.QueryRouter
  Votacion.QueryRouter$1
+Votacion/CandidatoData.java
+ Votacion.CandidatoData
 Votacion/FiltroResultados.java
  Votacion.FiltroResultados
 Votacion/TipoConsultaRegional.java
@@ -203,11 +205,11 @@ Votacion/_QueueServicePrxI.java
  Votacion._QueueServicePrxI
 Votacion/LugarVotacion.java
  Votacion.LugarVotacion
-com/registraduria/votacion/estacion/verificacion/VerificadorAsignacionImpl.java
- com.registraduria.votacion.estacion.verificacion.VerificadorAsignacionImpl
 Votacion/RDBMSPrimary.java
  Votacion.RDBMSPrimary
  Votacion.RDBMSPrimary$1
+com/registraduria/votacion/estacion/verificacion/VerificadorAsignacionImpl.java
+ com.registraduria.votacion.estacion.verificacion.VerificadorAsignacionImpl
 Votacion/DatabaseConnectionException.java
  Votacion.DatabaseConnectionException
 Votacion/ControllerEstacionPrx.java
@@ -215,6 +217,8 @@ Votacion/ControllerEstacionPrx.java
 Votacion/RepositorioCandidatosLocal.java
  Votacion.RepositorioCandidatosLocal
  Votacion.RepositorioCandidatosLocal$1
+com/registraduria/votacion/database/failover/FailoverHandlerImpl.java
+ com.registraduria.votacion.database.failover.FailoverHandlerImpl
 com/registraduria/votacion/centro/persistencia/AlmacenamientoVotosImpl.java
  com.registraduria.votacion.centro.persistencia.AlmacenamientoVotosImpl
 Votacion/PortalConsultas.java
@@ -224,6 +228,8 @@ Votacion/_CircuitBreakerServicePrxI.java
  Votacion._CircuitBreakerServicePrxI
 Votacion/VotoPendiente.java
  Votacion.VotoPendiente
+com/registraduria/votacion/database/rdbms/RDBMSReplicaImpl.java
+ com.registraduria.votacion.database.rdbms.RDBMSReplicaImpl
 Votacion/BrokerManagerPrx.java
  Votacion.BrokerManagerPrx
 Votacion/InfoCliente.java
@@ -257,6 +263,8 @@ Votacion/RegistroVotosPrx.java
  Votacion.RegistroVotosPrx
 Votacion/_FailoverHandlerPrxI.java
  Votacion._FailoverHandlerPrxI
+com/registraduria/votacion/database/circuit/CircuitBreakerServiceImpl.java
+ com.registraduria.votacion.database.circuit.CircuitBreakerServiceImpl
 com/registraduria/votacion/estacion/monitoreo/SistemaMonitorizacionImpl.java
  com.registraduria.votacion.estacion.monitoreo.SistemaMonitorizacionImpl
 Votacion/_MonitorBrokerPrxI.java
@@ -264,6 +272,9 @@ Votacion/_MonitorBrokerPrxI.java
 Votacion/VisualizadorResultados.java
  Votacion.VisualizadorResultados
  Votacion.VisualizadorResultados$1
+com/registraduria/votacion/database/cache/CacheServiceImpl.java
+ com.registraduria.votacion.database.cache.CacheServiceImpl
+ com.registraduria.votacion.database.cache.CacheServiceImpl$CacheEntry
 Votacion/GestorEnvioVotosCallback.java
  Votacion.GestorEnvioVotosCallback
  Votacion.GestorEnvioVotosCallback$1
@@ -339,6 +350,8 @@ Votacion/VotanteNoAutorizadoException.java
  Votacion.VotanteNoAutorizadoException
 Votacion/DatabaseNode.java
  Votacion.DatabaseNode
+com/registraduria/votacion/database/DatabaseProxyApp.java
+ com.registraduria.votacion.database.DatabaseProxyApp
 Votacion/_GestorEnvioVotosCallbackPrxI.java
  Votacion._GestorEnvioVotosCallbackPrxI
 Votacion/EstadoConexion.java
@@ -384,12 +397,16 @@ Votacion/RDBMSReplica.java
 Votacion/QueueService.java
  Votacion.QueueService
  Votacion.QueueService$1
+com/registraduria/votacion/database/manager/ConnectionManagerImpl.java
+ com.registraduria.votacion.database.manager.ConnectionManagerImpl
 Votacion/ConnectionInfo.java
  Votacion.ConnectionInfo
-Votacion/AdministradorMesaPrx.java
- Votacion.AdministradorMesaPrx
+com/registraduria/votacion/database/rdbms/RDBMSPrimaryImpl.java
+ com.registraduria.votacion.database.rdbms.RDBMSPrimaryImpl
 Votacion/TransactionInfo.java
  Votacion.TransactionInfo
+Votacion/AdministradorMesaPrx.java
+ Votacion.AdministradorMesaPrx
 Votacion/_ConnectionManagerPrxI.java
  Votacion._ConnectionManagerPrxI
 Votacion/RDBMSPrimaryPrx.java
