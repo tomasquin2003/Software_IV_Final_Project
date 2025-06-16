@@ -1,5 +1,5 @@
-Votacion/_ControllerEstacionPrxI.java
- Votacion._ControllerEstacionPrxI
+com/registraduria/votacion/central/ServidorCentralApp.java
+ com.registraduria.votacion.central.ServidorCentralApp
 Votacion/CacheService.java
  Votacion.CacheService
  Votacion.CacheService$1
@@ -232,6 +232,9 @@ com/registraduria/votacion/database/rdbms/RDBMSReplicaImpl.java
  com.registraduria.votacion.database.rdbms.RDBMSReplicaImpl
 Votacion/BrokerManagerPrx.java
  Votacion.BrokerManagerPrx
+com/registraduria/votacion/regional/cache/CacheRegionalImpl.java
+ com.registraduria.votacion.regional.cache.CacheRegionalImpl
+ com.registraduria.votacion.regional.cache.CacheRegionalImpl$CacheEntry
 Votacion/InfoCliente.java
  Votacion.InfoCliente
 com/registraduria/votacion/broker/circuit/CircuitBreakerServiceImpl.java
@@ -248,6 +251,8 @@ Votacion/DatosCacheResultados.java
  Votacion.DatosCacheResultados
 Votacion/ClienteSubscriptorPrx.java
  Votacion.ClienteSubscriptorPrx
+com/registraduria/votacion/regional/consultas/GestorConsultasRegionalImpl.java
+ com.registraduria.votacion.regional.consultas.GestorConsultasRegionalImpl
 Votacion/MotorEmisionVotosPrx.java
  Votacion.MotorEmisionVotosPrx
 Votacion/_AdminBrokerPrxI.java
@@ -337,6 +342,8 @@ Votacion/RegionNoDisponibleException.java
  Votacion.RegionNoDisponibleException
 Votacion/EstadisticasVotacion.java
  Votacion.EstadisticasVotacion
+com/registraduria/votacion/regional/ServidorRegionalApp.java
+ com.registraduria.votacion.regional.ServidorRegionalApp
 Votacion/DistribucionMesa.java
  Votacion.DistribucionMesa
 com/registraduria/votacion/centro/procesamiento/MotorEmisionVotosImpl.java
@@ -476,5 +483,5 @@ Votacion/ResultadosRegion.java
  Votacion.ResultadosRegion
 Votacion/PrioridadVoto.java
  Votacion.PrioridadVoto
-com/registraduria/votacion/central/ServidorCentralApp.java
- com.registraduria.votacion.central.ServidorCentralApp
+Votacion/_ControllerEstacionPrxI.java
+ Votacion._ControllerEstacionPrxI
