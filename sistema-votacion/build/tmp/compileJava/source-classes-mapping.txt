@@ -59,6 +59,8 @@ Votacion/EstadoImportacion.java
 Votacion/SubscriberManager.java
  Votacion.SubscriberManager
  Votacion.SubscriberManager$1
+com/registraduria/votacion/web/publisher/PublisherResultadosImpl.java
+ com.registraduria.votacion.web.publisher.PublisherResultadosImpl
 Votacion/EstadoCache.java
  Votacion.EstadoCache
 Votacion/FailoverHandler.java
@@ -81,6 +83,8 @@ Votacion/AdministradorMesaRemotoPrx.java
  Votacion.AdministradorMesaRemotoPrx
 Votacion/PublisherResultadosPrx.java
  Votacion.PublisherResultadosPrx
+com/registraduria/votacion/web/portal/PortalConsultasImpl.java
+ com.registraduria.votacion.web.portal.PortalConsultasImpl
 Votacion/TipoNotificacion.java
  Votacion.TipoNotificacion
 com/registraduria/votacion/broker/VotosBrokerApp.java
@@ -162,10 +166,10 @@ Votacion/ResultadosCallbackPrx.java
  Votacion.ResultadosCallbackPrx
 Votacion/TipoMesa.java
  Votacion.TipoMesa
-Votacion/GestorCandidatosPrx.java
- Votacion.GestorCandidatosPrx
 Votacion/ResultadosCachePrx.java
  Votacion.ResultadosCachePrx
+Votacion/GestorCandidatosPrx.java
+ Votacion.GestorCandidatosPrx
 Votacion/ControllerVotacionLocalPrx.java
  Votacion.ControllerVotacionLocalPrx
 Votacion/_InterfazAdministrativaPrxI.java
@@ -253,6 +257,9 @@ Votacion/ClienteSubscriptorPrx.java
  Votacion.ClienteSubscriptorPrx
 com/registraduria/votacion/regional/consultas/GestorConsultasRegionalImpl.java
  com.registraduria.votacion.regional.consultas.GestorConsultasRegionalImpl
+com/registraduria/votacion/web/visualizador/VisualizadorResultadosImpl.java
+ com.registraduria.votacion.web.visualizador.VisualizadorResultadosImpl
+ com.registraduria.votacion.web.visualizador.VisualizadorResultadosImpl$1
 Votacion/MotorEmisionVotosPrx.java
  Votacion.MotorEmisionVotosPrx
 Votacion/_AdminBrokerPrxI.java
@@ -287,6 +294,9 @@ Votacion/FailoverHandlerPrx.java
  Votacion.FailoverHandlerPrx
 com/registraduria/votacion/centro/validacion/ValidadorDeVotosImpl.java
  com.registraduria.votacion.centro.validacion.ValidadorDeVotosImpl
+com/registraduria/votacion/web/subscriber/SubscriberManagerImpl.java
+ com.registraduria.votacion.web.subscriber.SubscriberManagerImpl
+ com.registraduria.votacion.web.subscriber.SubscriberManagerImpl$SuscripcionData
 Votacion/ResultadosCache.java
  Votacion.ResultadosCache
  Votacion.ResultadosCache$1
@@ -329,11 +339,16 @@ Votacion/ValidadorDeVotos.java
  Votacion.ValidadorDeVotos$1
 Votacion/_GestorRecepcionVotosPrxI.java
  Votacion._GestorRecepcionVotosPrxI
+com/registraduria/votacion/web/ServidorWebApp.java
+ com.registraduria.votacion.web.ServidorWebApp
 Votacion/AdministradorMesaRemoto.java
  Votacion.AdministradorMesaRemoto
  Votacion.AdministradorMesaRemoto$1
 com/registraduria/votacion/central/controller/ControllerCentralImpl.java
  com.registraduria.votacion.central.controller.ControllerCentralImpl
+com/registraduria/votacion/web/cache/ResultadosCacheImpl.java
+ com.registraduria.votacion.web.cache.ResultadosCacheImpl
+ com.registraduria.votacion.web.cache.ResultadosCacheImpl$ResultadoCacheEntry
 Votacion/_ResultadosCallbackPrxI.java
  Votacion._ResultadosCallbackPrxI
 Votacion/CacheEntry.java
@@ -476,11 +491,11 @@ Votacion/ClienteNoExisteException.java
  Votacion.ClienteNoExisteException
 Votacion/EstadoCacheInfo.java
  Votacion.EstadoCacheInfo
+Votacion/ResultadosRegion.java
+ Votacion.ResultadosRegion
 Votacion/ClienteSubscriptor.java
  Votacion.ClienteSubscriptor
  Votacion.ClienteSubscriptor$1
-Votacion/ResultadosRegion.java
- Votacion.ResultadosRegion
 Votacion/PrioridadVoto.java
  Votacion.PrioridadVoto
 Votacion/_ControllerEstacionPrxI.java

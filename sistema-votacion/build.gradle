@@ -97,3 +97,12 @@ task runRegional(type: JavaExec) {
     args = ["--config", "src/main/resources/config/regional.config"]
     standardInput = System.in
 }
+
+task runWeb(type: JavaExec) {
+    group = "application"
+    description = "Ejecuta el Servidor Web"
+    main = 'com.registraduria.votacion.web.ServidorWebApp'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--config", "src/main/resources/config/web.config"]
+    standardInput = System.in
+}
