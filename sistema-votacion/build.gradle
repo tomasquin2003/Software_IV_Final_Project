@@ -57,3 +57,30 @@ task runCentro(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     args = ["--config", "src/main/resources/config/centro.config"]
 }
+
+task runCentral(type: JavaExec) {
+    group = "application"
+    description = "Ejecuta el Servidor Central"
+    main = 'com.registraduria.votacion.central.ServidorCentralApp'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--config", "src/main/resources/config/central.config"]
+    standardInput = System.in
+}
+
+task runBroker(type: JavaExec) {
+    group = "application"
+    description = "Ejecuta el VotosBroker (Middleware)"
+    main = 'com.registraduria.votacion.broker.VotosBrokerApp'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--config", "src/main/resources/config/broker.config"]
+    standardInput = System.in
+}
+
+task runDatabase(type: JavaExec) {
+    group = "application"
+    description = "Ejecuta el DatabaseProxy"
+    main = 'com.registraduria.votacion.database.DatabaseProxyApp'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--config", "src/main/resources/config/database.config"]
+    standardInput = System.in
+}
