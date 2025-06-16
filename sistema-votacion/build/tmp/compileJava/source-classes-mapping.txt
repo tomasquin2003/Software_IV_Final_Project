@@ -1,5 +1,5 @@
-com/registraduria/votacion/central/ServidorCentralApp.java
- com.registraduria.votacion.central.ServidorCentralApp
+Votacion/_ControllerEstacionPrxI.java
+ Votacion._ControllerEstacionPrxI
 Votacion/CacheService.java
  Votacion.CacheService
  Votacion.CacheService$1
@@ -476,5 +476,5 @@ Votacion/ResultadosRegion.java
  Votacion.ResultadosRegion
 Votacion/PrioridadVoto.java
  Votacion.PrioridadVoto
-Votacion/_ControllerEstacionPrxI.java
- Votacion._ControllerEstacionPrxI
+com/registraduria/votacion/central/ServidorCentralApp.java
+ com.registraduria.votacion.central.ServidorCentralApp

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CircuitBreakerPolicy>
+    <GlobalSettings>
+        <FailureThreshold>5</FailureThreshold>
+        <HalfOpenTimeout>30000</HalfOpenTimeout>
+        <EvaluationWindow>60000</EvaluationWindow>
+        <SuccessThreshold>3</SuccessThreshold>
+    </GlobalSettings>
+    
+    <NodePolicies>
+        <Node id="RDBMS_PRIMARY">
+            <FailureThreshold>3</FailureThreshold>
+            <Priority>HIGH</Priority>
+        </Node>
+        <Node id="RDBMS_REPLICA">
+            <FailureThreshold>5</FailureThreshold>
+            <Priority>MEDIUM</Priority>
+        </Node>
+    </NodePolicies>
+</CircuitBreakerPolicy>

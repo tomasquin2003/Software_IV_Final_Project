@@ -74,7 +74,7 @@ public class ServidorCentralApp {
             adapter.activate();
             
             logger.info("✅ ServidorCentral iniciado exitosamente");
-            logger.info("Puerto: {}", config.getProperty("servidor.puerto", "10002"));
+            logger.info("Puerto: {}", config.getProperty("servidor.puerto", "10003"));
             logger.info("Directorio datos: {}", config.getProperty("servidor.dataDir", "./data/central"));
             
             // Mostrar menú administrativo
@@ -95,10 +95,10 @@ public class ServidorCentralApp {
         Properties config = new Properties();
         
         // Configuración por defecto
-        config.setProperty("servidor.puerto", "10002");
+        config.setProperty("servidor.puerto", "10003");
         config.setProperty("servidor.dataDir", "./data/central");
         config.setProperty("servidor.nombre", "ServidorCentral");
-        config.setProperty("votosbroker.endpoint", "VotosBroker:tcp -p 10001");
+        config.setProperty("votosbroker.endpoint", "VotosBroker:tcp -p 10002");
         config.setProperty("database.endpoint", "DatabaseProxy:tcp -p 10004");
         
         // Intentar cargar archivo de configuración
@@ -132,7 +132,7 @@ public class ServidorCentralApp {
             communicator = Util.initialize(initData);
             
             // Crear adapter
-            String puerto = config.getProperty("servidor.puerto", "10002");
+            String puerto = config.getProperty("servidor.puerto", "10003");
             String endpoint = "tcp -p " + puerto;
             adapter = communicator.createObjectAdapterWithEndpoints("ServidorCentralAdapter", endpoint);
             
@@ -529,10 +529,10 @@ public class ServidorCentralApp {
     private static void crearArchivoConfiguracion(String archivo, Properties config) throws IOException {
         StringBuilder contenido = new StringBuilder();
         contenido.append("# Configuración del ServidorCentral\n");
-        contenido.append("servidor.puerto=10002\n");
+        contenido.append("servidor.puerto=10003\n");
         contenido.append("servidor.dataDir=./data/central\n");
         contenido.append("servidor.nombre=ServidorCentral\n");
-        contenido.append("votosbroker.endpoint=VotosBroker:tcp -p 10001\n");
+        contenido.append("votosbroker.endpoint=VotosBroker:tcp -p 10002\n");
         contenido.append("database.endpoint=DatabaseProxy:tcp -p 10004\n");
         
         Files.createDirectories(Paths.get(archivo).getParent());
