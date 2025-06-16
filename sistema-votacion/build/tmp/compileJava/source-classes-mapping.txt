@@ -1,3 +1,5 @@
+com/registraduria/votacion/central/ServidorCentralApp.java
+ com.registraduria.votacion.central.ServidorCentralApp
 Votacion/CacheService.java
  Votacion.CacheService
  Votacion.CacheService$1
@@ -36,6 +38,9 @@ Votacion/PersistenceManagerPrx.java
  Votacion.PersistenceManagerPrx
 Votacion/AlmacenamientoTransitorioPrx.java
  Votacion.AlmacenamientoTransitorioPrx
+com/registraduria/votacion/central/registro/RegistroVotosImpl.java
+ com.registraduria.votacion.central.registro.RegistroVotosImpl
+ com.registraduria.votacion.central.registro.RegistroVotosImpl$VotoAnonimizado
 Votacion/QueryParams.java
  Votacion.QueryParams
 Votacion/AdminBroker.java
@@ -64,6 +69,9 @@ Votacion/_PublisherResultadosPrxI.java
 com/registraduria/votacion/estacion/ui/VotacionUI.java
  com.registraduria.votacion.estacion.ui.VotacionUI
  com.registraduria.votacion.estacion.ui.VotacionUI$Candidato
+com/registraduria/votacion/central/candidatos/GestorCandidatosImpl.java
+ com.registraduria.votacion.central.candidatos.GestorCandidatosImpl
+ com.registraduria.votacion.central.candidatos.GestorCandidatosImpl$CandidatoInfo
 Votacion/BrokerManager.java
  Votacion.BrokerManager
  Votacion.BrokerManager$1
@@ -95,11 +103,11 @@ Votacion/_BrokerManagerPrxI.java
  Votacion._BrokerManagerPrxI
 Votacion/CacheRegionalPrx.java
  Votacion.CacheRegionalPrx
-Votacion/CacheServicePrx.java
- Votacion.CacheServicePrx
 Votacion/ConnectionManager.java
  Votacion.ConnectionManager
  Votacion.ConnectionManager$1
+Votacion/CacheServicePrx.java
+ Votacion.CacheServicePrx
 Votacion/TipoConsulta.java
  Votacion.TipoConsulta
 Votacion/EstadoVoto.java
@@ -162,10 +170,10 @@ Votacion/_InterfazAdministrativaPrxI.java
  Votacion._InterfazAdministrativaPrxI
 Votacion/CircuitBreakerException.java
  Votacion.CircuitBreakerException
-Votacion/CandidatoData.java
- Votacion.CandidatoData
 Votacion/ImportacionException.java
  Votacion.ImportacionException
+Votacion/CandidatoData.java
+ Votacion.CandidatoData
 Votacion/QueryRouter.java
  Votacion.QueryRouter
  Votacion.QueryRouter$1
@@ -308,6 +316,8 @@ Votacion/_GestorRecepcionVotosPrxI.java
 Votacion/AdministradorMesaRemoto.java
  Votacion.AdministradorMesaRemoto
  Votacion.AdministradorMesaRemoto$1
+com/registraduria/votacion/central/controller/ControllerCentralImpl.java
+ com.registraduria.votacion.central.controller.ControllerCentralImpl
 Votacion/_ResultadosCallbackPrxI.java
  Votacion._ResultadosCallbackPrxI
 Votacion/CacheEntry.java
@@ -344,6 +354,8 @@ Votacion/GestorRecepcionVotosPrx.java
  Votacion.GestorRecepcionVotosPrx
 Votacion/_CacheRegionalPrxI.java
  Votacion._CacheRegionalPrxI
+com/registraduria/votacion/central/admin/InterfazAdministrativaImpl.java
+ com.registraduria.votacion.central.admin.InterfazAdministrativaImpl
 Votacion/CircuitBreakerServicePrx.java
  Votacion.CircuitBreakerServicePrx
 Votacion/PublisherResultados.java
@@ -388,8 +400,16 @@ Votacion/VotoAnonimo.java
  Votacion.VotoAnonimo
 Votacion/QueryTimeoutException.java
  Votacion.QueryTimeoutException
+com/registraduria/votacion/central/database/ConnectionManagerImpl.java
+ com.registraduria.votacion.central.database.ConnectionManagerImpl
+ com.registraduria.votacion.central.database.ConnectionManagerImpl$VotoRecord
 Votacion/EstadoMesa.java
  Votacion.EstadoMesa
+com/registraduria/votacion/central/mesa/AdministradorMesaImpl.java
+ com.registraduria.votacion.central.mesa.AdministradorMesaImpl
+ com.registraduria.votacion.central.mesa.AdministradorMesaImpl$1
+ com.registraduria.votacion.central.mesa.AdministradorMesaImpl$AsignacionInfo
+ com.registraduria.votacion.central.mesa.AdministradorMesaImpl$MesaInfo
 Votacion/InterfazAdministrativa.java
  Votacion.InterfazAdministrativa
  Votacion.InterfazAdministrativa$1
