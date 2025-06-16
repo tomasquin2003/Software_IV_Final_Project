@@ -1,66 +1,74 @@
-Votacion/_GestorEnvioVotosCallbackPrxI.java
- Votacion._GestorEnvioVotosCallbackPrxI
+Votacion/CacheService.java
+ Votacion.CacheService
+ Votacion.CacheService$1
 Votacion/_VerificadorAsignacionPrxI.java
  Votacion._VerificadorAsignacionPrxI
-Votacion/ValidadorDeVotos.java
- Votacion.ValidadorDeVotos
- Votacion.ValidadorDeVotos$1
-Votacion/_GestorRecepcionVotosPrxI.java
- Votacion._GestorRecepcionVotosPrxI
+Votacion/RegistroVotosPrx.java
+ Votacion.RegistroVotosPrx
+Votacion/_FailoverHandlerPrxI.java
+ Votacion._FailoverHandlerPrxI
 Votacion/_AlmacenamientoTransitorioPrxI.java
  Votacion._AlmacenamientoTransitorioPrxI
-com/registraduria/votacion/estacion/verificacion/VerificadorAsignacionImpl.java
- com.registraduria.votacion.estacion.verificacion.VerificadorAsignacionImpl
-Votacion/ControllerEstacion.java
- Votacion.ControllerEstacion
- Votacion.ControllerEstacion$1
+Votacion/GestorConsultasRegionalPrx.java
+ Votacion.GestorConsultasRegionalPrx
 com/registraduria/votacion/estacion/monitoreo/SistemaMonitorizacionImpl.java
  com.registraduria.votacion.estacion.monitoreo.SistemaMonitorizacionImpl
-com/registraduria/votacion/estacion/votacion/GestorEnvioVotosImpl.java
- com.registraduria.votacion.estacion.votacion.GestorEnvioVotosImpl
-Votacion/ErrorPersistenciaException.java
- Votacion.ErrorPersistenciaException
+Votacion/VisualizadorResultados.java
+ Votacion.VisualizadorResultados
+ Votacion.VisualizadorResultados$1
+Votacion/_PersistenceManagerPrxI.java
+ Votacion._PersistenceManagerPrxI
 Votacion/GestorEnvioVotosCallbackPrx.java
  Votacion.GestorEnvioVotosCallbackPrx
-Votacion/VerificadorAsignacion.java
- Votacion.VerificadorAsignacion
- Votacion.VerificadorAsignacion$1
-Votacion/GestorRecepcionVotosPrx.java
- Votacion.GestorRecepcionVotosPrx
 Votacion/VerificadorAsignacionPrx.java
  Votacion.VerificadorAsignacionPrx
-com/registraduria/votacion/estacion/ui/VotacionUI.java
- com.registraduria.votacion.estacion.ui.VotacionUI
- com.registraduria.votacion.estacion.ui.VotacionUI$Candidato
-Votacion/ControllerEstacionPrx.java
- Votacion.ControllerEstacionPrx
+Votacion/QueryRouterPrx.java
+ Votacion.QueryRouterPrx
+Votacion/QueryResult.java
+ Votacion.QueryResult
 Votacion/GestorEnvioVotosCallback.java
  Votacion.GestorEnvioVotosCallback
  Votacion.GestorEnvioVotosCallback$1
-Votacion/VotoDuplicadoException.java
- Votacion.VotoDuplicadoException
+Votacion/ConnectionManagerPrx.java
+ Votacion.ConnectionManagerPrx
+Votacion/FailoverHandlerPrx.java
+ Votacion.FailoverHandlerPrx
+Votacion/_ConnectionManagerRemotoPrxI.java
+ Votacion._ConnectionManagerRemotoPrxI
+Votacion/_ClienteSubscriptorPrxI.java
+ Votacion._ClienteSubscriptorPrxI
 com/registraduria/votacion/centro/validacion/ValidadorDeVotosImpl.java
  com.registraduria.votacion.centro.validacion.ValidadorDeVotosImpl
-Votacion/_SistemaMonitorizacionPrxI.java
- Votacion._SistemaMonitorizacionPrxI
+Votacion/InterfazAdministrativaPrx.java
+ Votacion.InterfazAdministrativaPrx
+Votacion/ResultadosCache.java
+ Votacion.ResultadosCache
+ Votacion.ResultadosCache$1
 com/registraduria/votacion/estacion/controller/ControllerEstacionImpl.java
  com.registraduria.votacion.estacion.controller.ControllerEstacionImpl
-com/registraduria/votacion/centro/persistencia/AlmacenamientoVotosImpl.java
- com.registraduria.votacion.centro.persistencia.AlmacenamientoVotosImpl
+Votacion/RepositorioCandidatosLocalPrx.java
+ Votacion.RepositorioCandidatosLocalPrx
+Votacion/ResultadosCallback.java
+ Votacion.ResultadosCallback
+ Votacion.ResultadosCallback$1
 com/registraduria/votacion/estacion/persistencia/AlmacenamientoTransitorioImpl.java
  com.registraduria.votacion.estacion.persistencia.AlmacenamientoTransitorioImpl
+Votacion/_ControllerVotacionLocalPrxI.java
+ Votacion._ControllerVotacionLocalPrxI
 Votacion/ValidadorDeVotosPrx.java
  Votacion.ValidadorDeVotosPrx
-com/registraduria/votacion/centro/procesamiento/MotorEmisionVotosImpl.java
- com.registraduria.votacion.centro.procesamiento.MotorEmisionVotosImpl
+Votacion/_RetryHandlerPrxI.java
+ Votacion._RetryHandlerPrxI
+Votacion/_RDBMSPrimaryPrxI.java
+ Votacion._RDBMSPrimaryPrxI
 com/registraduria/votacion/estacion/util/EstacionContext.java
  com.registraduria.votacion.estacion.util.EstacionContext
-Votacion/GestorRecepcionVotos.java
- Votacion.GestorRecepcionVotos
- Votacion.GestorRecepcionVotos$1
-Votacion/AlmacenamientoVotos.java
- Votacion.AlmacenamientoVotos
- Votacion.AlmacenamientoVotos$1
+Votacion/_RDBMSReplicaPrxI.java
+ Votacion._RDBMSReplicaPrxI
+Votacion/PersistenceManagerPrx.java
+ Votacion.PersistenceManagerPrx
+Votacion/_AdministradorMesaPrxI.java
+ Votacion._AdministradorMesaPrxI
 Votacion/MotorEmisionVotos.java
  Votacion.MotorEmisionVotos
  Votacion.MotorEmisionVotos$1
@@ -68,33 +76,338 @@ Votacion/AlmacenamientoVotosPrx.java
  Votacion.AlmacenamientoVotosPrx
 Votacion/AlmacenamientoTransitorioPrx.java
  Votacion.AlmacenamientoTransitorioPrx
-Votacion/_MotorEmisionVotosPrxI.java
- Votacion._MotorEmisionVotosPrxI
+Votacion/CircuitStatus.java
+ Votacion.CircuitStatus
+Votacion/QueryParams.java
+ Votacion.QueryParams
+Votacion/SubscriberManagerPrx.java
+ Votacion.SubscriberManagerPrx
+Votacion/CandidatoDuplicadoException.java
+ Votacion.CandidatoDuplicadoException
+com/registraduria/votacion/centro/recepcion/GestorRecepcionVotosImpl.java
+ com.registraduria.votacion.centro.recepcion.GestorRecepcionVotosImpl
+Votacion/PortalConsultasPrx.java
+ Votacion.PortalConsultasPrx
+Votacion/Voto.java
+ Votacion.Voto
+Votacion/EstadoImportacion.java
+ Votacion.EstadoImportacion
+Votacion/SubscriberManager.java
+ Votacion.SubscriberManager
+ Votacion.SubscriberManager$1
+Votacion/ValidadorDeVotos.java
+ Votacion.ValidadorDeVotos
+ Votacion.ValidadorDeVotos$1
+Votacion/_GestorRecepcionVotosPrxI.java
+ Votacion._GestorRecepcionVotosPrxI
+Votacion/AdministradorMesaRemoto.java
+ Votacion.AdministradorMesaRemoto
+ Votacion.AdministradorMesaRemoto$1
+Votacion/EstadoCache.java
+ Votacion.EstadoCache
+Votacion/FailoverHandler.java
+ Votacion.FailoverHandler
+ Votacion.FailoverHandler$1
+Votacion/SuscripcionInvalidaException.java
+ Votacion.SuscripcionInvalidaException
+Votacion/_ResultadosCallbackPrxI.java
+ Votacion._ResultadosCallbackPrxI
+Votacion/_PublisherResultadosPrxI.java
+ Votacion._PublisherResultadosPrxI
+Votacion/CacheEntry.java
+ Votacion.CacheEntry
+com/registraduria/votacion/estacion/ui/VotacionUI.java
+ com.registraduria.votacion.estacion.ui.VotacionUI
+ com.registraduria.votacion.estacion.ui.VotacionUI$Candidato
+Votacion/AdministradorMesaRemotoPrx.java
+ Votacion.AdministradorMesaRemotoPrx
+Votacion/BrokerManager.java
+ Votacion.BrokerManager
+ Votacion.BrokerManager$1
+Votacion/RegionNoDisponibleException.java
+ Votacion.RegionNoDisponibleException
+Votacion/EstadisticasVotacion.java
+ Votacion.EstadisticasVotacion
+Votacion/PublisherResultadosPrx.java
+ Votacion.PublisherResultadosPrx
+Votacion/TipoNotificacion.java
+ Votacion.TipoNotificacion
+Votacion/DistribucionMesa.java
+ Votacion.DistribucionMesa
+com/registraduria/votacion/centro/procesamiento/MotorEmisionVotosImpl.java
+ com.registraduria.votacion.centro.procesamiento.MotorEmisionVotosImpl
+Votacion/GestorRecepcionVotos.java
+ Votacion.GestorRecepcionVotos
+ Votacion.GestorRecepcionVotos$1
+Votacion/AlmacenamientoVotos.java
+ Votacion.AlmacenamientoVotos
+ Votacion.AlmacenamientoVotos$1
+Votacion/ConnectionManagerRemoto.java
+ Votacion.ConnectionManagerRemoto
+ Votacion.ConnectionManagerRemoto$1
 Votacion/SistemaMonitorizacion.java
  Votacion.SistemaMonitorizacion
  Votacion.SistemaMonitorizacion$1
 Votacion/AlmacenamientoTransitorio.java
  Votacion.AlmacenamientoTransitorio
  Votacion.AlmacenamientoTransitorio$1
+Votacion/NotificacionCambio.java
+ Votacion.NotificacionCambio
+Votacion/_QueryRouterPrxI.java
+ Votacion._QueryRouterPrxI
+Votacion/_BrokerManagerPrxI.java
+ Votacion._BrokerManagerPrxI
+Votacion/CacheRegionalPrx.java
+ Votacion.CacheRegionalPrx
+Votacion/CacheServicePrx.java
+ Votacion.CacheServicePrx
+Votacion/ConnectionManager.java
+ Votacion.ConnectionManager
+ Votacion.ConnectionManager$1
+Votacion/TipoConsulta.java
+ Votacion.TipoConsulta
 Votacion/VotanteNoAutorizadoException.java
  Votacion.VotanteNoAutorizadoException
+Votacion/DatabaseNode.java
+ Votacion.DatabaseNode
 Votacion/EstadoVoto.java
  Votacion.EstadoVoto
-Votacion/MotorEmisionVotosPrx.java
- Votacion.MotorEmisionVotosPrx
+Votacion/ConfiguracionMesa.java
+ Votacion.ConfiguracionMesa
 Votacion/_AlmacenamientoVotosPrxI.java
  Votacion._AlmacenamientoVotosPrxI
-com/registraduria/votacion/estacion/EstacionVotacionApp.java
- com.registraduria.votacion.estacion.EstacionVotacionApp
-Votacion/SistemaMonitorizacionPrx.java
- Votacion.SistemaMonitorizacionPrx
-Votacion/_ControllerEstacionPrxI.java
- Votacion._ControllerEstacionPrxI
-Votacion/_ValidadorDeVotosPrxI.java
- Votacion._ValidadorDeVotosPrxI
-Votacion/Voto.java
- Votacion.Voto
+com/registraduria/votacion/estacion/votacion/GestorEnvioVotosImpl.java
+ com.registraduria.votacion.estacion.votacion.GestorEnvioVotosImpl
+Votacion/_ControllerCentralPrxI.java
+ Votacion._ControllerCentralPrxI
+Votacion/QueueFullException.java
+ Votacion.QueueFullException
+Votacion/GestorCandidatos.java
+ Votacion.GestorCandidatos
+ Votacion.GestorCandidatos$1
+Votacion/_GestorEnvioVotosCallbackPrxI.java
+ Votacion._GestorEnvioVotosCallbackPrxI
+Votacion/_ResultadosCachePrxI.java
+ Votacion._ResultadosCachePrxI
+Votacion/EstadoConexion.java
+ Votacion.EstadoConexion
+Votacion/_GestorCandidatosPrxI.java
+ Votacion._GestorCandidatosPrxI
+Votacion/CacheRegional.java
+ Votacion.CacheRegional
+ Votacion.CacheRegional$1
+Votacion/ControllerEstacion.java
+ Votacion.ControllerEstacion
+ Votacion.ControllerEstacion$1
+Votacion/RetryHandler.java
+ Votacion.RetryHandler
+ Votacion.RetryHandler$1
+Votacion/_VisualizadorResultadosPrxI.java
+ Votacion._VisualizadorResultadosPrxI
 com/registraduria/votacion/centro/CentroVotacionApp.java
  com.registraduria.votacion.centro.CentroVotacionApp
-com/registraduria/votacion/centro/recepcion/GestorRecepcionVotosImpl.java
- com.registraduria.votacion.centro.recepcion.GestorRecepcionVotosImpl
+Votacion/ErrorPersistenciaException.java
+ Votacion.ErrorPersistenciaException
+Votacion/VerificadorAsignacion.java
+ Votacion.VerificadorAsignacion
+ Votacion.VerificadorAsignacion$1
+Votacion/AsignacionMesa.java
+ Votacion.AsignacionMesa
+Votacion/GestorRecepcionVotosPrx.java
+ Votacion.GestorRecepcionVotosPrx
+Votacion/TipoFiltro.java
+ Votacion.TipoFiltro
+Votacion/RetryHandlerPrx.java
+ Votacion.RetryHandlerPrx
+Votacion/_RepositorioCandidatosLocalPrxI.java
+ Votacion._RepositorioCandidatosLocalPrxI
+Votacion/_CacheRegionalPrxI.java
+ Votacion._CacheRegionalPrxI
+Votacion/CircuitBreakerServicePrx.java
+ Votacion.CircuitBreakerServicePrx
+Votacion/ResultadoVotacion.java
+ Votacion.ResultadoVotacion
+Votacion/PublisherResultados.java
+ Votacion.PublisherResultados
+ Votacion.PublisherResultados$1
+Votacion/VisualizadorResultadosPrx.java
+ Votacion.VisualizadorResultadosPrx
+Votacion/DatosCache.java
+ Votacion.DatosCache
+Votacion/PersistenceManager.java
+ Votacion.PersistenceManager
+ Votacion.PersistenceManager$1
+Votacion/_SistemaMonitorizacionPrxI.java
+ Votacion._SistemaMonitorizacionPrxI
+Votacion/EstadoReplicacion.java
+ Votacion.EstadoReplicacion
+Votacion/DatosBroker.java
+ Votacion.DatosBroker
+Votacion/ReplicationException.java
+ Votacion.ReplicationException
+Votacion/ResultadosNoDisponiblesException.java
+ Votacion.ResultadosNoDisponiblesException
+Votacion/TipoCache.java
+ Votacion.TipoCache
+Votacion/ResultadosCallbackPrx.java
+ Votacion.ResultadosCallbackPrx
+Votacion/ResultadosVotacion.java
+ Votacion.ResultadosVotacion
+Votacion/TipoMesa.java
+ Votacion.TipoMesa
+Votacion/_RegistroVotosPrxI.java
+ Votacion._RegistroVotosPrxI
+Votacion/GestorCandidatosPrx.java
+ Votacion.GestorCandidatosPrx
+Votacion/ResultadosCachePrx.java
+ Votacion.ResultadosCachePrx
+Votacion/ControllerVotacionLocalPrx.java
+ Votacion.ControllerVotacionLocalPrx
+Votacion/_InterfazAdministrativaPrxI.java
+ Votacion._InterfazAdministrativaPrxI
+Votacion/CircuitBreakerException.java
+ Votacion.CircuitBreakerException
+Votacion/RDBMSReplica.java
+ Votacion.RDBMSReplica
+ Votacion.RDBMSReplica$1
+Votacion/QueueService.java
+ Votacion.QueueService
+ Votacion.QueueService$1
+Votacion/CandidatoData.java
+ Votacion.CandidatoData
+Votacion/ImportacionException.java
+ Votacion.ImportacionException
+Votacion/QueryRouter.java
+ Votacion.QueryRouter
+ Votacion.QueryRouter$1
+Votacion/FiltroResultados.java
+ Votacion.FiltroResultados
+Votacion/ConnectionInfo.java
+ Votacion.ConnectionInfo
+Votacion/TipoConsultaRegional.java
+ Votacion.TipoConsultaRegional
+Votacion/RDBMSReplicaPrx.java
+ Votacion.RDBMSReplicaPrx
+Votacion/AdministradorMesaPrx.java
+ Votacion.AdministradorMesaPrx
+Votacion/TransactionInfo.java
+ Votacion.TransactionInfo
+Votacion/InfoRegional.java
+ Votacion.InfoRegional
+Votacion/_ConnectionManagerPrxI.java
+ Votacion._ConnectionManagerPrxI
+Votacion/ControllerCentral.java
+ Votacion.ControllerCentral
+ Votacion.ControllerCentral$1
+Votacion/GestorConsultasRegional.java
+ Votacion.GestorConsultasRegional
+ Votacion.GestorConsultasRegional$1
+Votacion/_GestorConsultasRegionalPrxI.java
+ Votacion._GestorConsultasRegionalPrxI
+Votacion/SistemaMonitorizacionPrx.java
+ Votacion.SistemaMonitorizacionPrx
+Votacion/EstadoSuscripcion.java
+ Votacion.EstadoSuscripcion
+Votacion/RDBMSPrimaryPrx.java
+ Votacion.RDBMSPrimaryPrx
+Votacion/_ValidadorDeVotosPrxI.java
+ Votacion._ValidadorDeVotosPrxI
+Votacion/_QueueServicePrxI.java
+ Votacion._QueueServicePrxI
+Votacion/LugarVotacion.java
+ Votacion.LugarVotacion
+Votacion/_PortalConsultasPrxI.java
+ Votacion._PortalConsultasPrxI
+Votacion/VotoAnonimo.java
+ Votacion.VotoAnonimo
+com/registraduria/votacion/estacion/verificacion/VerificadorAsignacionImpl.java
+ com.registraduria.votacion.estacion.verificacion.VerificadorAsignacionImpl
+Votacion/RDBMSPrimary.java
+ Votacion.RDBMSPrimary
+ Votacion.RDBMSPrimary$1
+Votacion/QueryTimeoutException.java
+ Votacion.QueryTimeoutException
+Votacion/DatabaseConnectionException.java
+ Votacion.DatabaseConnectionException
+Votacion/EstadoMesa.java
+ Votacion.EstadoMesa
+Votacion/ControllerEstacionPrx.java
+ Votacion.ControllerEstacionPrx
+Votacion/RepositorioCandidatosLocal.java
+ Votacion.RepositorioCandidatosLocal
+ Votacion.RepositorioCandidatosLocal$1
+Votacion/InterfazAdministrativa.java
+ Votacion.InterfazAdministrativa
+ Votacion.InterfazAdministrativa$1
+Votacion/VotoDuplicadoException.java
+ Votacion.VotoDuplicadoException
+Votacion/RegistroVotos.java
+ Votacion.RegistroVotos
+ Votacion.RegistroVotos$1
+Votacion/CircuitBreakerService.java
+ Votacion.CircuitBreakerService
+ Votacion.CircuitBreakerService$1
+Votacion/EstadoCircuito.java
+ Votacion.EstadoCircuito
+Votacion/CacheException.java
+ Votacion.CacheException
+Votacion/ConnectionManagerRemotoPrx.java
+ Votacion.ConnectionManagerRemotoPrx
+Votacion/_SubscriberManagerPrxI.java
+ Votacion._SubscriberManagerPrxI
+com/registraduria/votacion/centro/persistencia/AlmacenamientoVotosImpl.java
+ com.registraduria.votacion.centro.persistencia.AlmacenamientoVotosImpl
+Votacion/PortalConsultas.java
+ Votacion.PortalConsultas
+ Votacion.PortalConsultas$1
+Votacion/SuscripcionResultados.java
+ Votacion.SuscripcionResultados
+Votacion/VotanteNoExisteException.java
+ Votacion.VotanteNoExisteException
+Votacion/_CircuitBreakerServicePrxI.java
+ Votacion._CircuitBreakerServicePrxI
+Votacion/VotoPendiente.java
+ Votacion.VotoPendiente
+Votacion/BrokerManagerPrx.java
+ Votacion.BrokerManagerPrx
+Votacion/InfoCliente.java
+ Votacion.InfoCliente
+Votacion/_MotorEmisionVotosPrxI.java
+ Votacion._MotorEmisionVotosPrxI
+Votacion/MesaNoExisteException.java
+ Votacion.MesaNoExisteException
+Votacion/AdministradorMesa.java
+ Votacion.AdministradorMesa
+ Votacion.AdministradorMesa$1
+Votacion/_CacheServicePrxI.java
+ Votacion._CacheServicePrxI
+Votacion/ControllerCentralPrx.java
+ Votacion.ControllerCentralPrx
+Votacion/QueueServicePrx.java
+ Votacion.QueueServicePrx
+Votacion/DatosCacheResultados.java
+ Votacion.DatosCacheResultados
+Votacion/_AdministradorMesaRemotoPrxI.java
+ Votacion._AdministradorMesaRemotoPrxI
+Votacion/ClienteSubscriptorPrx.java
+ Votacion.ClienteSubscriptorPrx
+Votacion/ClienteNoExisteException.java
+ Votacion.ClienteNoExisteException
+Votacion/EstadoCacheInfo.java
+ Votacion.EstadoCacheInfo
+Votacion/MotorEmisionVotosPrx.java
+ Votacion.MotorEmisionVotosPrx
+Votacion/ClienteSubscriptor.java
+ Votacion.ClienteSubscriptor
+ Votacion.ClienteSubscriptor$1
+Votacion/ResultadosRegion.java
+ Votacion.ResultadosRegion
+Votacion/PrioridadVoto.java
+ Votacion.PrioridadVoto
+Votacion/_ControllerEstacionPrxI.java
+ Votacion._ControllerEstacionPrxI
+com/registraduria/votacion/estacion/EstacionVotacionApp.java
+ com.registraduria.votacion.estacion.EstacionVotacionApp
+Votacion/ControllerVotacionLocal.java
+ Votacion.ControllerVotacionLocal
+ Votacion.ControllerVotacionLocal$1
