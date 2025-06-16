@@ -110,7 +110,7 @@ public class VotacionUI {
                     // Mostrar candidatos y solicitar voto
                     String candidatoId = solicitarVoto();
                       if (candidatoId != null) {
-                        // CAMBIO CRÍTICO: Enviar voto con la cédula del votante
+                        // CAMBIO CRITICO: Enviar voto con la cedula del votante
                         String votoId = gestorEnvioVotos.enviarVoto(candidatoId, cedula);
                         mostrarConfirmacion(votoId);
                     }
@@ -125,7 +125,7 @@ public class VotacionUI {
                 
             } catch (Exception e) {
                 logger.error("Error en el flujo de votación", e);
-                System.out.println("\n¡ERROR! Se produjo un problema inesperado.");
+                System.out.println("\nERROR! Se produjo un problema inesperado.");
                 System.out.println("Por favor, contacte al administrador de la mesa.");
                 
                 // Pequeña pausa antes de reiniciar
@@ -183,10 +183,10 @@ public class VotacionUI {
             boolean resultado = controllerEstacion.autenticarVotante(cedula);
             
             if (resultado) {
-                System.out.println("¡Autenticion exitosa! El votante puede proceder a votar.");
+                System.out.println("Autenticacion exitosa! El votante puede proceder a votar.");
                 return true;
             } else {
-                System.out.println("Autenticacion fallida. El votante no está autorizado.");
+                System.out.println("Autenticacion fallida. El votante no esta autorizado.");
                 return false;
             }
             
@@ -218,7 +218,7 @@ public class VotacionUI {
         String seleccion = scanner.nextLine().trim();
         
         if (seleccion.equalsIgnoreCase("cancelar")) {
-            System.out.println("Votación cancelada por el usuario.");
+            System.out.println("Votacion cancelada por el usuario.");
             return null;
         }
         
@@ -228,7 +228,7 @@ public class VotacionUI {
                 System.out.printf("Ha seleccionado a: %s (%s)%n", candidato.getNombre(), candidato.getPartido());
                 
                 // Solicitar confirmación
-                System.out.println("\n¿Confirma su voto? (s/n):");
+                System.out.println("\nConfirma su voto? (s/n):");
                 String confirmacion = scanner.nextLine().trim().toLowerCase();
                 
                 if (confirmacion.equals("s") || confirmacion.equals("si")) {
@@ -251,7 +251,7 @@ public class VotacionUI {
      * @param votoId ID del voto registrado
      */
     private void mostrarConfirmacion(String votoId) {
-        System.out.println("\n¡VOTO REGISTRADO EXITOSAMENTE!");
+        System.out.println("\nVOTO REGISTRADO EXITOSAMENTE!");
         System.out.println("ID del voto: " + votoId);
         System.out.println("Fecha y hora: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         System.out.println("\nGracias por participar en las elecciones.");
